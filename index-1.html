@@ -1,0 +1,1484 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>凡人修仙錄</title>
+<meta name="description" content="把現實習慣變成修仙的打卡遊戲：每天打卡累積修為，突破境界。">
+<meta name="theme-color" content="#dde5df" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b1311" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="修仙錄">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --serif:'Noto Serif TC','Songti TC','Source Han Serif TC','PMingLiU',serif;
+  --sans:'Noto Sans TC','PingFang TC','Microsoft JhengHei','Heiti TC',system-ui,sans-serif;
+  --bg:#dde5df; --bg2:#e8eee9; --paper:#f1f5f0; --ink:#14201d; --ink2:#4d5f59; --ink3:#8a9a94;
+  --line:#c3cfc8; --track:#d0dbd4; --jade:#1d6b5e; --glow:#3fa792; --gold:#a9822f; --seal:#b83a2c;
+  --nav:rgba(232,238,233,.88); --chip:#e3ebe5; --mist1:rgba(63,167,146,.16); --mist2:rgba(169,130,47,.09);
+  --shadow:0 18px 30px -22px rgba(20,32,29,.55);
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0b1311; --bg2:#101b18; --paper:#121e1b; --ink:#e4ece6; --ink2:#9db1a9; --ink3:#5f746c;
+    --line:#22332e; --track:#1b2a26; --jade:#5fcdb5; --glow:#8be8d1; --gold:#d8b45c; --seal:#e2604f;
+    --nav:rgba(16,27,24,.88); --chip:#182823; --mist1:rgba(95,205,181,.10); --mist2:rgba(216,180,92,.06);
+    --shadow:0 18px 30px -22px rgba(0,0,0,.9);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0b1311; --bg2:#101b18; --paper:#121e1b; --ink:#e4ece6; --ink2:#9db1a9; --ink3:#5f746c;
+  --line:#22332e; --track:#1b2a26; --jade:#5fcdb5; --glow:#8be8d1; --gold:#d8b45c; --seal:#e2604f;
+  --nav:rgba(16,27,24,.88); --chip:#182823; --mist1:rgba(95,205,181,.10); --mist2:rgba(216,180,92,.06);
+  --shadow:0 18px 30px -22px rgba(0,0,0,.9);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.65}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(700px 420px at 90% -8%,var(--mist1),transparent 65%),radial-gradient(620px 460px at -12% 38%,var(--mist2),transparent 65%)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--jade);outline-offset:2px}
+.app{max-width:520px;margin:0 auto;padding:14px 16px 104px}
+
+/* top bar */
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.brand{font-family:var(--serif);font-weight:900;font-size:19px;letter-spacing:.18em}
+.iconbtn{border:1px solid var(--line);background:var(--paper);width:36px;height:36px;border-radius:50%;display:grid;place-items:center;cursor:pointer;color:var(--ink2)}
+
+/* seal */
+.seal{display:inline-grid;place-items:center;background:var(--seal);color:#fff;font-family:var(--serif);font-weight:900;border-radius:3px;transform:rotate(-5deg);
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.28),inset 0 0 0 3px var(--seal)}
+
+/* hero scroll */
+.hero{position:relative;background:var(--paper);border-left:1px solid var(--line);border-right:1px solid var(--line);padding:26px 18px 16px;box-shadow:var(--shadow);overflow:hidden}
+.hero::before,.hero::after{content:"";position:absolute;left:-6px;right:-6px;height:9px;background:var(--ink);border-radius:5px;opacity:.88}
+.hero::before{top:0}.hero::after{bottom:0}
+.mount{position:absolute;left:0;right:0;bottom:8px;width:100%;height:120px;color:var(--jade);pointer-events:none}
+.orbs i{position:absolute;width:5px;height:5px;border-radius:50%;background:var(--glow);box-shadow:0 0 10px 3px var(--glow);opacity:0;animation:drift 7s ease-in infinite}
+.orbs i:nth-child(1){left:52%;bottom:60px;animation-delay:0s}
+.orbs i:nth-child(2){left:64%;bottom:48px;animation-delay:1.6s}
+.orbs i:nth-child(3){left:78%;bottom:66px;animation-delay:3.1s}
+.orbs i:nth-child(4){left:88%;bottom:40px;animation-delay:4.4s}
+.orbs i:nth-child(5){left:44%;bottom:44px;animation-delay:5.5s}
+.hero-body{position:relative;display:flex;gap:16px;align-items:flex-start}
+.realm-v{display:flex;flex-direction:column;align-items:center;font-family:var(--serif);font-weight:900;font-size:40px;color:var(--ink);padding-right:14px;border-right:1px solid var(--line);min-height:150px}
+.realm-v span{display:block;line-height:1.14}
+.hero-meta{flex:1;min-width:0}
+.dao{font-family:var(--serif);font-weight:700;font-size:17px;display:flex;align-items:center;gap:8px}
+.dayline{color:var(--ink2);font-size:13px;margin-top:2px;display:flex;gap:10px;flex-wrap:wrap}
+.dayline b{font-family:var(--serif);color:var(--gold);font-weight:700}
+.xp{margin-top:14px;display:flex;align-items:baseline;gap:6px}
+.xp b{font-family:var(--serif);font-weight:900;font-size:40px;line-height:1}
+.xp span{color:var(--ink2);font-size:13px}
+.qi-wrap{position:relative;margin-top:16px}
+.qi{height:9px;border-radius:99px;background:var(--track);overflow:hidden}
+.qi i{display:block;height:100%;width:0;border-radius:inherit;background:var(--jade);box-shadow:0 0 12px 1px var(--glow);position:relative;transition:width 1s cubic-bezier(.2,.8,.2,1)}
+.qi i::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent);transform:translateX(-100%);animation:sheen 3s ease-in-out infinite}
+.qi-cap{display:flex;justify-content:space-between;font-size:12px;color:var(--ink2);margin-top:5px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;position:relative}
+.chip{display:inline-flex;align-items:center;padding:2px 10px;border-radius:99px;background:var(--chip);border:1px solid var(--line);color:var(--ink2);font-size:12px}
+.chip.lock{opacity:.42}
+.chip.gold{color:var(--gold);border-color:var(--gold)}
+
+/* generic blocks */
+.block{margin-top:20px}
+.block-h{display:flex;align-items:baseline;justify-content:space-between;font-family:var(--serif);font-weight:700;font-size:17px;padding-bottom:6px;border-bottom:2px solid var(--ink);margin-bottom:2px}
+.block-h small{font-family:var(--sans);font-weight:400;font-size:13px;color:var(--ink2)}
+.note{color:var(--ink2);font-size:13px}
+.banner{margin-top:12px;padding:10px 12px;border-left:3px solid var(--gold);background:var(--chip);font-size:13px;color:var(--ink)}
+.banner b{font-family:var(--serif)}
+
+/* quests (烏絲欄) */
+.quest{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:12px 2px;cursor:pointer}
+.sbox{flex:none;width:40px;height:40px;border-radius:4px;border:1.5px dashed var(--ink3);display:grid;place-items:center;transition:background .2s,border-color .2s}
+.sbox b{font-family:var(--serif);font-weight:900;font-size:19px;color:#fff;opacity:0;transform:rotate(-8deg)}
+.quest.done .sbox{border:1.5px solid var(--seal);background:var(--seal)}
+.quest.done .sbox b{opacity:1}
+.quest.fresh .sbox b{animation:stamp .55s cubic-bezier(.2,1.3,.4,1)}
+.quest.done .qn{color:var(--ink2)}
+.qm{flex:1;min-width:0}
+.qn{font-family:var(--serif);font-weight:700;font-size:16px;display:block}
+.qd{font-size:12.5px;color:var(--ink2);display:block}
+.qr{font-size:12px;color:var(--jade);text-align:right;line-height:1.4;flex:none}
+.quest.off{opacity:.45}
+
+/* buttons & inputs */
+.btn{border:1px solid var(--ink);background:transparent;color:var(--ink);border-radius:8px;padding:9px 16px;cursor:pointer;font-weight:500}
+.btn.pri{background:var(--ink);color:var(--bg)}
+.btn.seal{background:var(--seal);border-color:var(--seal);color:#fff}
+.btn.ghost{border-color:var(--line);color:var(--ink2)}
+.btn.sm{padding:5px 12px;font-size:13px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.inp{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg2);color:var(--ink);font:inherit}
+label.f{display:block;font-size:13px;color:var(--ink2);margin:12px 0 4px}
+.seg{display:flex;border-bottom:1px solid var(--line);margin-bottom:4px}
+.seg button{flex:1;background:none;border:0;padding:10px 0;color:var(--ink2);cursor:pointer;font-family:var(--serif);font-weight:700;font-size:16px;position:relative}
+.seg button.on{color:var(--ink)}
+.seg button.on::after{content:"";position:absolute;left:30%;right:30%;bottom:-1px;height:3px;background:var(--seal);border-radius:2px}
+
+/* bars */
+.bar{height:7px;background:var(--track);border-radius:99px;overflow:hidden;position:relative}
+.bar i{display:block;height:100%;width:0;background:var(--jade);border-radius:inherit;transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.bar.gold i{background:var(--gold)}
+.gate{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--seal)}
+
+/* attribute rows */
+.arow{padding:12px 0;border-bottom:1px solid var(--line)}
+.arow-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.arow-h b{font-family:var(--serif);font-size:16px}
+
+/* breakthrough */
+.bt{margin-top:18px;border:1.5px solid var(--gold);padding:14px 16px;background:var(--paper);position:relative}
+.bt h3{margin:0 0 4px;font-family:var(--serif);font-size:17px}
+.need{display:flex;align-items:center;gap:10px;padding:5px 0;font-size:14px}
+.need .ok{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:12px;background:var(--track);color:var(--ink3);flex:none}
+.need.met .ok{background:var(--jade);color:var(--bg)}
+.need span:last-child{margin-left:auto;color:var(--ink2);font-size:13px}
+
+/* encounter */
+.enc{margin-top:18px;padding:14px 16px;border:1px solid var(--line);background:var(--paper);display:flex;gap:14px;align-items:center}
+.enc .seal{width:44px;height:44px;font-size:22px;flex:none}
+.enc h3{margin:0;font-family:var(--serif);font-size:16px}
+.enc p{margin:0;font-size:13px;color:var(--ink2)}
+
+/* skills */
+.skill{padding:14px 0;border-bottom:1px solid var(--line)}
+.skill-h{display:flex;justify-content:space-between;align-items:baseline}
+.skill-h b{font-family:var(--serif);font-size:18px}
+.stats3{display:grid;grid-template-columns:repeat(3,1fr);text-align:center;margin:12px 0 8px}
+.stats3 b{display:block;font-family:var(--serif);font-size:21px}
+.stats3 span{font-size:12px;color:var(--ink2)}
+
+/* timeline */
+.tl-day{display:flex;justify-content:space-between;align-items:baseline;margin-top:20px;font-family:var(--serif);font-weight:700;font-size:16px;padding-bottom:4px;border-bottom:1px solid var(--ink)}
+.tl-day small{font-family:var(--sans);font-weight:400;color:var(--ink2);font-size:12.5px}
+.ev{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
+.ev .g{flex:none;width:30px;height:30px;border-radius:4px;display:grid;place-items:center;font-family:var(--serif);font-weight:900;font-size:14px;color:#fff;background:var(--jade)}
+.ev.growth .g{background:var(--gold)}
+.ev.encounter .g,.ev.challenge .g{background:var(--seal)}
+.ev.record .g{background:var(--ink2)}
+.ev.trial .g{background:var(--ink)}
+.ev b{font-family:var(--serif);font-size:15px;display:block}
+.ev small{color:var(--ink2);font-size:12.5px;display:block}
+
+/* me */
+.id{display:flex;gap:16px;align-items:center;margin-top:6px}
+.id .seal{width:64px;height:64px;font-size:32px}
+.id h2{margin:0;font-family:var(--serif);font-size:22px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);text-align:center;margin-top:16px;padding:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.grid4 b{display:block;font-family:var(--serif);font-size:19px}
+.grid4 span{font-size:11.5px;color:var(--ink2)}
+.tree{margin:6px 0 0 6px;border-left:2px solid var(--line);padding-left:18px}
+.tree li{list-style:none;position:relative;padding:5px 0;color:var(--ink3);font-family:var(--serif)}
+.tree li::before{content:"";position:absolute;left:-25px;top:13px;width:10px;height:10px;border-radius:50%;background:var(--bg);border:2px solid var(--line)}
+.tree li.pass{color:var(--ink2)}.tree li.pass::before{background:var(--jade);border-color:var(--jade)}
+.tree li.now{color:var(--ink);font-weight:900;font-size:17px}.tree li.now::before{background:var(--seal);border-color:var(--seal);box-shadow:0 0 0 4px rgba(184,58,44,.2)}
+.tree small{font-family:var(--sans);font-weight:400;margin-left:8px;font-size:12px}
+.demo{margin-top:8px;padding:12px 14px;border:1px dashed var(--ink3)}
+.demo .row{margin-top:8px}
+
+/* trial goals & evidence */
+.goal{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:9px 2px;cursor:pointer}
+.gbox{flex:none;width:22px;height:22px;border-radius:3px;border:1.5px solid var(--ink3);display:grid;place-items:center;font-size:13px;color:transparent;transition:background .2s}
+.goal.done .gbox{background:var(--jade);border-color:var(--jade);color:var(--bg)}
+.goal.done .gt{color:var(--ink2);text-decoration:line-through;text-decoration-color:var(--ink3)}
+.picks{display:flex;gap:6px}
+.pick{flex:1;padding:9px 0;border:1px solid var(--line);background:transparent;border-radius:6px;cursor:pointer;color:var(--ink2);font-size:13px}
+.pick.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.evid{margin-top:8px;border:1px solid var(--line);background:var(--bg2);padding:6px 14px}
+.kv{display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;font-size:14px;border-bottom:1px dotted var(--line)}
+.kv:last-child{border-bottom:0}
+.kv b{font-family:var(--serif)}
+.hint{margin-top:10px;padding:10px 12px;border-left:3px solid var(--jade);background:var(--chip);font-size:13px}
+
+/* attributes */
+.art{margin:8px -6px 0}
+.art svg{display:block;width:100%;height:auto}
+.aura{transform-origin:180px 112px;animation:spin 90s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.art-cap{margin:0 0 6px;text-align:center;font-family:var(--serif);color:var(--ink2);font-size:14px}
+.attr{display:flex;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.attr-g{flex:none;width:46px;height:46px;display:grid;place-items:center;font-family:var(--serif);font-weight:900;font-size:24px;border:1.5px solid var(--ink);border-radius:4px;color:var(--ink);transform:rotate(-3deg)}
+.attr.top .attr-g{background:var(--seal);border-color:var(--seal);color:#fff}
+.attr-m{flex:1;min-width:0}
+.attr-h{display:flex;align-items:baseline;gap:8px}
+.attr-h b{font-family:var(--serif);font-size:17px}
+.attr-h .tier{color:var(--gold);font-family:var(--serif);font-size:13px}
+.attr-h em{margin-left:auto;font-style:normal;font-family:var(--serif);font-weight:900;font-size:22px}
+.seg5{display:flex;gap:3px;margin:7px 0 5px}
+.seg5 span{flex:1;height:7px;background:var(--track);border-radius:2px;overflow:hidden}
+.seg5 i{display:block;height:100%;width:0;background:var(--jade);transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.attr-f{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--ink2);gap:8px}
+.quest.opt .sbox{border-color:var(--jade)}
+.quest.opt.done .sbox{background:var(--jade);border-color:var(--jade)}
+.quest.opt .qr{color:var(--ink2)}
+
+/* tutorial */
+#tut{position:fixed;inset:0;z-index:95;display:none;background:rgba(6,12,10,.66);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);overflow:auto}
+#tut.on{display:flex;align-items:center;justify-content:center;padding:70px 16px 24px}
+.tex{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:14px;z-index:96;border:1px solid var(--ink);background:var(--paper);color:var(--ink);border-radius:99px;padding:8px 16px;font-weight:700;cursor:pointer;box-shadow:var(--shadow)}
+.tcard{width:100%;max-width:420px;background:var(--paper);border-top:4px solid var(--ink);padding:24px 22px 18px;box-shadow:var(--shadow);animation:up .25s ease-out}
+.thead{display:flex;align-items:center;justify-content:space-between}
+.thead .seal{width:52px;height:52px;font-size:26px}
+.tstep{color:var(--ink2);font-size:13px}
+.tcard h3{margin:16px 0 8px;font-family:var(--serif);font-size:22px;line-height:1.35}
+.tbody{font-size:15px;min-height:168px}
+.tbody p{margin:0 0 10px}
+.tbody ol,.tbody ul{margin:0 0 10px;padding-left:22px}
+.tbody li{margin:5px 0}
+.tbody .path{font-family:var(--serif);font-weight:700;font-size:17px;padding:10px 12px;background:var(--chip);border-left:3px solid var(--gold)}
+.tbody .chips{margin-top:0}
+.tdots{display:flex;gap:6px;justify-content:center;margin:14px 0}
+.tdots i{width:7px;height:7px;border-radius:50%;background:var(--track)}
+.tdots i.on{background:var(--seal);width:20px;border-radius:4px}
+
+/* brand */
+.brand{display:flex;align-items:center;gap:10px;color:var(--ink)}
+.wordmark{display:block}
+.tlogo{display:flex;align-items:center;gap:10px;color:var(--ink)}
+
+/* crisis: 道心震盪 */
+.chip.crit{background:#ff4b36;color:#1a0605;border-color:#ff4b36;font-weight:700;animation:pulse 1.1s ease-in-out infinite}
+.hero.shaken{border-color:#ff4b36}
+.hero.shaken::before,.hero.shaken::after{background:#ff4b36;opacity:1}
+.crisis-card{position:relative;margin-top:14px;background:#22090a;color:#ffe9e4;border:2px solid #ff4b36;overflow:hidden;animation:crit 1.5s ease-in-out infinite}
+.crisis-card .stripe{height:8px;background:repeating-linear-gradient(-45deg,#ff4b36 0 10px,#1a0605 10px 20px)}
+.crisis-card .cb{padding:8px 14px 12px;text-align:center}
+.cr-top{display:flex;align-items:center;justify-content:center;gap:8px}
+.bolt{display:block;filter:drop-shadow(0 0 6px rgba(255,213,74,.9))}
+.cr-title{margin:0;font-family:var(--serif);font-weight:900;font-size:28px;letter-spacing:.12em;color:#ff5b46;text-shadow:0 0 12px rgba(255,75,54,.95),2px 0 0 rgba(255,255,255,.14),-2px 0 0 rgba(0,190,255,.22);animation:jolt 2.6s steps(1) infinite}
+.cr-line{margin:2px 0 8px;font-size:13.5px;color:#ffc9be}
+.cr-line b{font-family:var(--serif);font-weight:900;font-size:22px;color:#ffd54a;padding:0 3px;text-shadow:0 0 10px rgba(255,213,74,.6)}
+.cr-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.cr-pips{display:flex;gap:6px}
+.pip{width:22px;height:22px;border-radius:50%;border:2px dashed #ff7a66;display:grid;place-items:center;color:#1a0605;font-weight:900;font-size:12px}
+.pip.on{background:#ffd54a;border:2px solid #ffd54a}
+.cr-info{display:flex;flex-direction:column;text-align:left;font-size:12px;color:#ffb3a6;line-height:1.45}
+.cr-info b{font-family:var(--serif);color:#fff}
+.btn.crit{background:#ff4b36;border-color:#ff4b36;color:#1a0605;font-weight:900;letter-spacing:.06em;padding:8px 14px;font-size:14px}
+body.crisis::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:15;animation:vig 2.2s ease-in-out infinite}
+@keyframes crit{0%,100%{box-shadow:0 0 0 1px #6b120c,0 0 16px rgba(255,75,54,.35),inset 0 0 24px rgba(255,60,40,.2)}50%{box-shadow:0 0 0 1px #6b120c,0 0 30px rgba(255,75,54,.75),inset 0 0 40px rgba(255,60,40,.4)}}
+@keyframes jolt{0%,88%,100%{transform:none}90%{transform:translate(-3px,1px) skewX(-3deg)}92%{transform:translate(3px,-1px)}94%{transform:translate(-2px,0)}96%{transform:none}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.55}}
+@keyframes vig{0%,100%{box-shadow:inset 0 0 70px rgba(255,60,40,.16)}50%{box-shadow:inset 0 0 120px rgba(255,60,40,.34)}}
+
+/* collapsible slot groups */
+.qtools{display:flex;justify-content:space-between;align-items:center;margin:8px 0 0;font-size:12.5px;color:var(--ink2)}
+.mini{display:inline-flex;border:1px solid var(--line);border-radius:99px;overflow:hidden}
+.mini button{background:none;border:0;padding:4px 12px;font-size:12.5px;color:var(--ink2);cursor:pointer}
+.mini button.on{background:var(--ink);color:var(--bg)}
+.gh{display:flex;align-items:center;gap:10px;width:100%;background:none;border:0;border-bottom:1px solid var(--ink);padding:12px 2px 8px;margin-top:10px;cursor:pointer;text-align:left}
+.gh-g{flex:none;width:32px;height:32px;display:grid;place-items:center;font-family:var(--serif);font-weight:900;font-size:16px;border:1.5px solid var(--ink);border-radius:4px;transform:rotate(-3deg)}
+.gh.alldone .gh-g{background:var(--jade);border-color:var(--jade);color:var(--bg)}
+.gh-n{font-family:var(--serif);font-weight:700;font-size:16px}
+.gh-n small{font-family:var(--sans);font-weight:400;font-size:12px;color:var(--ink2);margin-left:8px}
+.gh-c{margin-left:auto;font-family:var(--serif);font-weight:700;color:var(--ink2)}
+.gh.alldone .gh-c{color:var(--jade)}
+.gh-chev{font-size:22px;color:var(--ink2);transition:transform .2s;line-height:1}
+.gh.open .gh-chev{transform:rotate(90deg)}
+.gb.shut{display:none}
+
+/* resume card */
+.cv{margin-top:16px;background:var(--paper);border:1px solid var(--line);border-top:4px solid var(--ink);padding:16px 16px 14px;box-shadow:var(--shadow)}
+.cv-h{display:flex;justify-content:space-between;align-items:flex-start}
+.cv-h h3{margin:0;font-family:var(--serif);font-size:21px;letter-spacing:.12em}
+.cv-h p{margin:2px 0 0;color:var(--ink2);font-size:13px}
+.cv-h .seal{width:40px;height:40px;font-size:20px}
+.cv-grid{display:grid;grid-template-columns:repeat(3,1fr);margin:14px 0 4px;border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.cv-grid>div{padding:13px 4px 10px;text-align:center;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.cv-grid b{display:block;font-family:var(--serif);font-weight:900;font-size:25px;line-height:1.2}
+.cv-grid span{font-size:12px;color:var(--ink2)}
+.cv-sub{margin:14px 0 6px;font-family:var(--serif);font-weight:700;font-size:14px}
+.heat{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,1fr);grid-template-columns:repeat(16,1fr);gap:3px}
+.hc{display:block;aspect-ratio:1;border-radius:2px;background:var(--track)}
+.hc.x{background:transparent}
+.hc.l1{background:var(--jade);opacity:.4}
+.hc.l2{background:var(--jade);opacity:.7}
+.hc.l3{background:var(--jade)}
+.hc.now{outline:1.5px solid var(--seal);outline-offset:1px}
+.heat-legend{display:flex;align-items:center;justify-content:flex-end;gap:4px;margin-top:8px;font-size:11.5px;color:var(--ink2)}
+.heat-legend .hc{width:12px;height:12px;aspect-ratio:auto}
+.cv-foot{margin:10px 0 0;padding-top:10px;border-top:1px dashed var(--line);font-size:12.5px;color:var(--ink2);text-align:center;font-family:var(--serif)}
+
+/* hero enrichments */
+.moon{position:absolute;top:22px;right:14px;width:66px;height:66px;pointer-events:none}
+.xp em{margin-left:8px;font-style:normal;font-size:12px;color:var(--jade);border:1px solid var(--jade);border-radius:99px;padding:0 8px;line-height:1.6;align-self:center}
+.stairs{display:flex;gap:8px;margin-top:14px;position:relative}
+.sg{min-width:0}
+.sg .pips{display:flex;gap:2px;align-items:flex-end;height:11px}
+.sg .pips i{flex:1;height:5px;border-radius:1px;background:var(--track)}
+.sg .pips i.done{background:var(--jade)}
+.sg .pips i.now{background:var(--seal);height:11px}
+.sg .pips i.lock{background:none;border:1px dashed var(--ink3)}
+.sg span{display:block;margin-top:3px;font-size:10.5px;color:var(--ink2);white-space:nowrap}
+
+/* swipe rows + reorder */
+.swrow{position:relative;overflow:hidden;border-bottom:1px solid var(--line);user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.sw-main{position:relative;z-index:2;background:var(--bg);touch-action:pan-y;transition:transform .22s,background .15s}
+.sw-main.quest{border-bottom:0;cursor:grab}
+.sw-main.pressing{background:var(--chip)}
+.sw-lead,.sw-trail{position:absolute;top:0;bottom:0;display:flex;z-index:1}
+.sw-lead{left:0;width:92px}
+.sw-trail{right:0;width:152px}
+.swb{flex:1;border:0;color:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:var(--serif);letter-spacing:.08em}
+.swb.pause{background:var(--jade)}
+.swb.edit{background:var(--gold)}
+.swb.del{background:var(--seal)}
+.dots{flex:none;border:0;background:none;color:var(--ink3);font-size:20px;line-height:1;padding:6px 4px;cursor:pointer}
+.swrow.dragging{opacity:.28}
+.swrow.ghost{background:var(--paper);border:1px solid var(--jade);box-shadow:0 16px 30px -10px rgba(0,0,0,.5);transform:scale(1.02);pointer-events:none}
+.swrow.ghost .sw-main{background:var(--paper)}
+.drop-line{position:fixed;height:3px;border-radius:2px;background:var(--seal);z-index:84;pointer-events:none;box-shadow:0 0 8px var(--seal)}
+.grp.drop-target .gh{outline:2px dashed var(--seal);outline-offset:-2px}
+.gempty{padding:14px 4px;border-bottom:1px dashed var(--line);color:var(--ink3);font-size:13px}
+body.dragging-list{user-select:none;-webkit-user-select:none}
+.hintline{margin:6px 0 0;font-size:12px;color:var(--ink2)}
+
+/* nav */
+nav{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--nav);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:7px 10px calc(7px + env(safe-area-inset-bottom,0px))}
+.nav-in{max-width:520px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:2px}
+.nb{background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:2px;padding:2px 0;color:var(--ink2);cursor:pointer}
+.nb .g{width:34px;height:34px;border-radius:5px;display:grid;place-items:center;border:1.5px solid var(--line);font-family:var(--serif);font-weight:900;font-size:17px;transition:transform .25s,background .25s}
+.nb small{font-size:11px}
+.nb.on{color:var(--ink)}
+.nb.on .g{background:var(--seal);border-color:var(--seal);color:#fff;transform:rotate(-5deg)}
+
+/* sheet */
+#sheet{position:fixed;inset:0;z-index:60;display:none}
+#sheet.on{display:block}
+.scrim{position:absolute;inset:0;background:rgba(6,12,10,.55)}
+.panel{position:absolute;left:0;right:0;bottom:0;max-width:520px;margin:0 auto;background:var(--paper);border-top:3px solid var(--ink);padding:18px 18px calc(20px + env(safe-area-inset-bottom,0px));max-height:88%;overflow:auto;animation:up .25s ease-out}
+.panel h3{margin:0 0 4px;font-family:var(--serif);font-size:19px}
+.panel textarea.inp{min-height:150px;font-size:12px}
+
+/* toast */
+#toast{position:fixed;left:50%;top:calc(12px + env(safe-area-inset-top,0px));transform:translate(-50%,-30px);opacity:0;z-index:90;background:var(--ink);color:var(--bg);padding:9px 18px;border-radius:99px;font-family:var(--serif);font-weight:700;transition:.3s;pointer-events:none;max-width:90%;text-align:center}
+#toast.on{transform:translate(-50%,0);opacity:1}
+
+/* ritual */
+#ritual{position:fixed;inset:0;z-index:100;display:none;background:radial-gradient(circle at 50% 38%,#0f2a25 0,#050b0a 70%);color:#e9efe8;text-align:center;overflow:hidden}
+#ritual.on{display:block}
+#ritual.shake{animation:shake .5s}
+.rings i{position:absolute;left:50%;top:36%;width:50px;height:50px;margin:-25px 0 0 -25px;border:2px solid rgba(139,232,209,.75);border-radius:50%;animation:ring 2.6s ease-out infinite}
+.rings i:nth-child(2){animation-delay:.85s}.rings i:nth-child(3){animation-delay:1.7s}
+.flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+.flash.go{animation:flash 1s ease-out}
+.rlines{position:absolute;left:0;right:0;top:56%;padding:0 24px}
+.rlines p{margin:8px 0;font-family:var(--serif);font-size:19px;letter-spacing:.12em;animation:fadein .8s both}
+.rlines p.boom{font-size:44px;font-weight:900;color:#f0d78c}
+.win{position:absolute;left:0;right:0;top:20%;padding:0 28px;animation:fadein 1s both}
+.win .seal{width:96px;height:96px;font-size:44px;animation:stamp .7s cubic-bezier(.2,1.3,.4,1) both}
+.win h2{font-family:var(--serif);font-size:30px;margin:22px 0 6px;letter-spacing:.14em}
+.win p{color:#a9bdb5;margin:0 0 24px}
+.win .btn{border-color:#e9efe8;color:#e9efe8}
+
+@keyframes sheen{0%{transform:translateX(-100%)}60%,100%{transform:translateX(100%)}}
+@keyframes drift{0%{opacity:0;transform:translateY(0)}20%{opacity:.9}100%{opacity:0;transform:translateY(-70px)}}
+@keyframes stamp{0%{opacity:0;transform:scale(2.8) rotate(-22deg)}70%{opacity:1;transform:scale(.92) rotate(-6deg)}100%{opacity:1;transform:scale(1) rotate(-8deg)}}
+@keyframes up{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+@keyframes ring{0%{transform:scale(.4);opacity:.9}100%{transform:scale(9);opacity:0}}
+@keyframes flash{0%{opacity:.95}100%{opacity:0}}
+@keyframes shake{0%,100%{transform:none}20%{transform:translate(-7px,4px)}40%{transform:translate(6px,-5px)}60%{transform:translate(-4px,3px)}80%{transform:translate(3px,-2px)}}
+@keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <div class="brand" id="brand" role="img" aria-label="凡人修仙錄"></div>
+    <button class="iconbtn" data-act="theme" aria-label="切換日夜">☾</button>
+  </div>
+  <main id="view"></main>
+</div>
+<nav><div class="nav-in">
+  <button class="nb" data-act="tab" data-v="home"><span class="g">洞</span><small>洞府</small></button>
+  <button class="nb" data-act="tab" data-v="train"><span class="g">修</span><small>修行</small></button>
+  <button class="nb" data-act="tab" data-v="trial"><span class="g">試</span><small>試道</small></button>
+  <button class="nb" data-act="tab" data-v="log"><span class="g">錄</span><small>修仙錄</small></button>
+  <button class="nb" data-act="tab" data-v="me"><span class="g">我</span><small>我</small></button>
+</div></nav>
+<div id="sheet"></div>
+<div id="toast"></div>
+<div id="ritual"></div>
+<div id="tut"></div>
+
+<script>
+(() => {
+'use strict';
+const APP_VERSION = '0.1.0';
+const DEMO = /[?&]demo(=1|=true)?(&|$)/.test(location.search);
+const KEY = 'fanren-xiuxian-v1', THEME_KEY = 'fanren-theme';
+const ATTRS = [['body','鍛體'],['wisdom','悟道'],['heart','養心'],['worldly','入世'],['virtue','積德']];
+const ATTR_NAME = Object.fromEntries(ATTRS);
+const LQ = '一二三四五六七八九'.split('');
+const CUM = [50,100,160,230,310,400,500,620,760];
+const STAGES = [
+  {name:'凡人',at:0,major:'凡人'},
+  {name:'引氣',at:20,major:'引氣'},
+  ...LQ.map((n,i)=>({name:'練氣'+n+'層',at:CUM[i],major:'練氣'})),
+  {name:'築基初期',at:1000,major:'築基',f:true},
+  {name:'築基中期',at:1600,major:'築基',f:true},
+  {name:'築基後期',at:2400,major:'築基',f:true},
+  {name:'築基圓滿',at:3400,major:'築基',f:true}
+];
+const BREAK = {cultivation:1000, attrs:{body:300,wisdom:200}, streak:7};
+const MAJORS = ['凡人','引氣','練氣','築基','金丹','元嬰','化神','合體','大乘','渡劫','飛升'];
+const OPEN_MAJORS = ['凡人','引氣','練氣','築基'];
+const STREAK_NAMES = [[365,'凡人之軀，已有仙骨'],[100,'道心穩固'],[30,'小周天成'],[14,'靈氣運轉'],[7,'經脈漸通'],[3,'氣感初成'],[1,'靈氣初聚']];
+const PATHS = [['煉器','陶藝、木工、手作'],['織造','編織、縫紉'],['符道','繪畫、書法、設計'],['丹道','烘焙、料理、茶'],['靈植','園藝、種植'],['證道','證照、考試'],['機關術','程式、電子'],['通靈術','語言'],['留影術','攝影、剪輯'],['音律道','樂器、作曲']];
+const LADDER = {'陶藝':[['煉器學徒',0],['泥塑入門',5],['陶藝初成',20],['器胚鍛造',50],['靈器師',100],['法寶宗師',200]]};
+const GEN = [['入門學徒',0],['初窺門徑',5],['小有所成',20],['駕輕就熟',50],['融會貫通',100],['一代宗師',200]];
+const ENCS = [
+  {id:'spring',name:'山中靈泉',cond:'今日喝水達到目標',r:{xp:10}},
+  {id:'library',name:'藏經閣開門',cond:'今日閱讀 20 分鐘',r:{attrs:{wisdom:20}}},
+  {id:'demon',name:'心魔來襲',cond:'完成今天最不想做的一件事',r:{daoHeart:30}},
+  {id:'elder',name:'老祖指點',cond:'連續修煉滿 7 日，今日修為加成',r:{xp:15},need:7}
+];
+const DEFAULT_GOALS = ['認識基本工具與流程','完成一個小成果','記錄自己的感受'];
+const ENERGY = {up:'做完更有精神',flat:'精神差不多',down:'做完更疲憊'};
+const DRIVE = {self:'主動想做',mid:'動力普通',forced:'需要逼自己'};
+const TIERS = [0,50,150,300,600,1000];
+const TIER_NAMES = {
+  body:['凡軀','初鍛','銅皮','鐵骨','金身','不壞'],
+  wisdom:['蒙昧','開竅','通透','明理','洞見','悟道'],
+  heart:['浮躁','靜氣','澄心','止水','明鏡','無垢'],
+  worldly:['懵懂','歷事','幹練','通達','洞明','圓融'],
+  virtue:['私心','善念','慈懷','功德','澤被','大德']
+};
+const WORD_FAN = 'M374 343 366 348C402 413 432 498 434 579C566 697 710 432 374 343ZM208 117V425C208 624 188 814 24 966L31 973C331 843 354 621 354 424V145H600V824C600 922 626 950 729 950H797C934 950 984 919 984 860C984 832 974 816 940 799L935 650H926C908 709 888 770 875 790C867 801 858 803 849 804C840 804 828 804 815 804H773C754 804 748 798 748 780V159C771 155 781 148 788 139L656 33L587 117H375L208 61Z';
+const WORD_REST = 'M1583 85C1609 81 1618 72 1620 57L1426 39C1425 363 1438 684 1088 961L1098 974C1481 798 1556 542 1575 278C1597 607 1664 842 1905 966C1921 887 1966 832 2039 817L2040 805C1701 696 1604 478 1583 85ZM2400 175V862H2423C2470 862 2524 836 2524 825V347L2533 354C2590 326 2643 288 2688 239C2705 277 2723 311 2745 342C2691 401 2618 452 2530 491L2535 502C2634 479 2722 446 2796 402C2850 453 2921 491 3021 513C3027 448 3049 408 3100 386L3101 375C3017 369 2945 357 2884 338C2932 296 2969 248 2995 192H3068C3083 192 3094 187 3096 176C3050 134 2972 71 2972 71L2903 164H2747C2759 145 2771 124 2782 102C2805 103 2818 95 2823 82L2652 25C2630 149 2580 268 2524 345V215C2548 212 2555 202 2557 190ZM2704 221 2727 192H2835C2823 227 2806 261 2784 293C2752 273 2725 249 2704 221ZM2784 437C2717 517 2637 588 2547 636L2555 651C2660 629 2769 592 2862 542C2775 648 2670 730 2549 787L2555 801C2690 775 2819 726 2934 655C2819 823 2667 903 2477 959L2480 973C2710 954 2889 899 3057 743C3081 748 3095 745 3102 733L2949 646L2967 634C2990 639 3001 637 3009 626L2873 536L2877 534C2898 539 2908 536 2916 527ZM2265 25C2244 214 2190 417 2131 551L2143 558C2171 533 2196 505 2220 474V975H2244C2294 975 2349 949 2350 940V357C2369 354 2378 347 2382 338L2319 315C2351 250 2378 179 2401 101C2424 101 2437 93 2441 80ZM3919 61 3738 45V846H3650V280C3676 276 3683 267 3686 252L3507 235V831C3495 841 3483 853 3475 864L3617 943L3657 874H3969V938H3996C4050 938 4114 907 4114 894V275C4140 271 4147 261 4149 248L3969 232V846H3882V91C3910 86 3917 76 3919 61ZM3477 326 3429 309C3467 248 3500 181 3529 105C3552 105 3565 97 3570 84L3372 24C3339 219 3262 422 3185 550L3196 557C3234 530 3270 501 3303 467V975H3330C3386 975 3444 945 3446 934V346C3466 342 3474 336 3477 326ZM5217 525 5084 432C5065 479 5026 569 4998 622L5006 631C5056 603 5141 560 5180 532C5202 538 5212 534 5217 525ZM4615 762 4710 883C4721 877 4728 865 4728 851C4786 767 4825 701 4848 660L4844 652C4752 699 4656 745 4615 762ZM4679 562 4552 519C4548 587 4539 665 4529 716L4544 723C4583 685 4615 632 4640 582C4661 583 4674 575 4679 562ZM4290 531 4277 535C4292 589 4304 665 4297 728C4365 806 4464 658 4290 531ZM5124 308 5068 392H5044L5111 184C5132 182 5142 179 5150 169L5033 76L4979 135H4875L4890 83C4918 81 4929 69 4931 56L4765 32C4754 84 4719 206 4692 278C4678 285 4664 294 4655 303L4775 376L4821 321H4929L4906 392H4640L4648 420H4855V834C4855 844 4852 850 4838 850C4821 850 4754 846 4754 846V858C4795 865 4810 880 4821 896C4832 913 4834 941 4836 978C4969 969 4988 919 4988 837V420H5196C5210 420 5221 415 5223 404C5188 366 5124 308 5124 308ZM4995 666 4988 673C5036 727 5074 803 5097 857C5207 943 5306 700 4995 666ZM4824 293 4866 163H4981L4938 293ZM4508 82C4535 79 4545 71 4548 58L4369 15C4357 111 4312 279 4258 375L4267 381C4290 364 4312 345 4334 324H4398V461H4269L4277 489H4398V785C4339 801 4290 814 4261 820L4333 963C4345 959 4355 947 4359 934C4490 846 4578 776 4634 729L4631 719L4518 752V489H4636C4647 489 4655 486 4659 478C4692 516 4722 573 4728 624C4834 699 4931 491 4661 466L4658 468C4625 432 4571 383 4571 383L4518 461V324H4602C4616 324 4626 319 4629 308L4581 266C4667 299 4767 149 4507 84ZM4534 227 4481 296H4362C4416 238 4464 171 4495 110C4523 155 4543 206 4552 241Z';
+const SLOTS = [['morning','晨修','晨','清晨至上午'],['noon','午修','午','中午至傍晚'],['evening','夜修','夜','晚上至睡前'],['any','不限時段','隨','任何時間']];
+const SLOT_ORDER = ['morning','noon','evening','any'];
+const SLOT_DEF = {q1:'morning',q2:'morning',q3:'noon',q4:'evening',q5:'evening'};
+const curSlot = () => { const h = new Date().getHours(); return h<11 ? 'morning' : (h<17 ? 'noon' : 'evening'); };
+function emblem(px,id){
+  return '<svg width="'+px+'" height="'+px+'" viewBox="0 0 100 100" aria-hidden="true"><defs><clipPath id="ec'+id+'"><circle cx="50" cy="50" r="42"/></clipPath></defs>'
+    + '<circle cx="50" cy="50" r="47" fill="none" stroke="var(--ink)" stroke-width="2.5"/>'
+    + '<circle cx="50" cy="50" r="49.6" fill="none" stroke="var(--glow)" stroke-width="1" stroke-dasharray="1.5 4" opacity=".85"/>'
+    + '<g clip-path="url(#ec'+id+')"><rect width="100" height="100" fill="var(--paper)"/><circle cx="50" cy="40" r="17" fill="var(--seal)"/>'
+    + '<path d="M0 66L20 46L36 60L56 34L78 58L100 44V100H0Z" fill="var(--jade)"/><path d="M0 80L24 62L42 74L64 52L100 78V100H0Z" fill="var(--ink)"/>'
+    + '<circle cx="56" cy="27.2" r="2.1" fill="var(--paper)"/><path d="M52.2 34.4Q56 25.6 59.8 34.4Z" fill="var(--paper)"/>'
+    + '<path d="M6 88C28 80 40 92 62 84S90 88 98 82" fill="none" stroke="var(--paper)" stroke-width="1.6" stroke-linecap="round" opacity=".7"/></g></svg>';
+}
+function wordmark(h){
+  return '<svg class="wordmark" width="'+Math.round(h*5.24)+'" height="'+h+'" viewBox="0 0 5240 1000" aria-hidden="true"><path d="'+WORD_FAN+'" fill="var(--seal)"/><path d="'+WORD_REST+'" fill="currentColor"/></svg>';
+}
+function stairs(cur){
+  const groups = [['凡人',[0]],['引氣',[1]],['練氣',[2,3,4,5,6,7,8,9,10]],['築基',[11,12,13,14]]];
+  return '<div class="stairs">'+groups.map(g=>'<div class="sg" style="flex:'+g[1].length+'"><div class="pips">'+g[1].map(i=>'<i class="'+(i<cur?'done':(i===cur?'now':''))+'"></i>').join('')+'</div><span>'+g[0]+'</span></div>').join('')
+    + '<div class="sg" style="flex:1"><div class="pips"><i class="lock"></i></div><span>金丹</span></div></div>';
+}
+function fmtLeft(){ const n = new Date(), e = new Date(n); e.setHours(24,0,0,0); const m = Math.max(0,Math.floor((e-n)/60000)); return Math.floor(m/60)+' 時 '+(m%60)+' 分'; }
+const viewToggle = () => '<div class="mini">'+[['slot','依時段'],['all','全部']].map(x=>'<button class="'+(S.prefs.view===x[0]?'on':'')+'" data-act="qview" data-v="'+x[0]+'">'+x[1]+'</button>').join('')+'</div>';
+function slotGroups(list,prefix,rowFn,doneFn,labelFn){
+  if (S.prefs.view==='all') return list.map(rowFn).join('');
+  const t = today(); if (ui.defDate!==t){ ui.defDate = t; ui.defOpen = {}; }
+  const cur = curSlot(), ci = SLOT_ORDER.indexOf(cur);
+  return SLOTS.map(([id,name,g,hint])=>{
+    const items = list.filter(q=>(q.slot||'any')===id); if (!items.length && prefix!=='m') return '';
+    const key = prefix+':'+id, done = items.filter(doneFn).length, all = done===items.length, idx = SLOT_ORDER.indexOf(id);
+    if (ui.defOpen[key]===undefined) ui.defOpen[key] = prefix==='m' || id==='any' || id===cur || (idx<ci && !all);
+    const open = S.prefs.open[key]!==undefined ? S.prefs.open[key] : ui.defOpen[key];
+    return '<div class="grp" data-slot="'+id+'"><button class="gh '+(open?'open':'')+(all&&prefix==='t'?' alldone':'')+'" data-act="grp" data-id="'+key+'" data-v="'+(open?1:0)+'" aria-expanded="'+open+'">'
+      + '<span class="gh-g">'+g+'</span><span class="gh-n">'+name+'<small>'+hint+'</small></span>'
+      + (id===cur&&prefix==='t' ? '<span class="chip gold">現在</span>' : '')
+      + '<span class="gh-c">'+labelFn(items,done)+'</span><span class="gh-chev">›</span></button>'
+      + '<div class="gb '+(open?'':'shut')+'">'+(items.length ? items.map(rowFn).join('') : '<div class="gempty">目前沒有功法，可長按其他功法拖曳到這裡</div>')+'</div></div>';
+  }).join('');
+}
+
+const EV_G = {practice:'修',trial:'試',growth:'進',challenge:'魔',encounter:'遇',record:'錄'};
+
+/* ---------- helpers ---------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pad = n => String(n).padStart(2,'0');
+const fmt = d => d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const parse = s => { const [y,m,d] = s.split('-').map(Number); return new Date(y,m-1,d); };
+const today = () => fmt(new Date());
+const addDays = (s,n) => { const d = parse(s); d.setDate(d.getDate()+n); return fmt(d); };
+const diffDays = (a,b) => Math.round((parse(a)-parse(b))/864e5);
+const uid = () => Math.random().toString(36).slice(2,9);
+const clamp = (v,a,b) => Math.min(b,Math.max(a,v));
+const hash = s => { let h = 2166136261; for (const c of s){ h ^= c.charCodeAt(0); h = Math.imul(h,16777619); } return h>>>0; };
+const num = n => Number(n).toLocaleString('en-US');
+
+/* ---------- state ---------- */
+function defaultState(){
+  const t = today();
+  return {
+    v:1,
+    user:{daoName:'無名道友',cultivation:0,daoHeart:50,foundation:false,createdAt:t,longestStreak:0,stageReached:0},
+    attrs:{body:0,wisdom:0,heart:0,worldly:0,virtue:0},
+    quests:[
+      {id:'q1',name:'早起吐納術',desc:'07:30 前起床',attr:'heart',ar:10,xp:3,active:true,slot:'morning'},
+      {id:'q2',name:'太上健體經',desc:'運動 30 分鐘',attr:'body',ar:20,xp:5,active:true,slot:'morning'},
+      {id:'q3',name:'萬卷書',desc:'閱讀 20 分鐘',attr:'wisdom',ar:15,xp:4,active:true,slot:'noon'},
+      {id:'q4',name:'靜心觀想法',desc:'冥想 10 分鐘',attr:'heart',ar:15,xp:4,active:true,slot:'evening'},
+      {id:'q5',name:'斷念訣',desc:'睡前一小時不滑手機',attr:'heart',ar:20,xp:4,active:true,slot:'evening'}
+    ],
+    events:[], repairs:[], prefs:{view:'slot',open:{}},
+    skills:[{id:'s1',name:'陶藝',path:'煉器',count:14,minutes:1380,works:[
+      {id:'w1',name:'第一個陶杯'},{id:'w2',name:'小茶碗'},{id:'w3',name:'花器'},{id:'w4',name:'筆洗'},{id:'w5',name:'湯匙墊'}]}],
+    trials:[{id:'t1',name:'裁縫',days:7,start:addDays(t,-2),purpose:'體驗裁縫是否適合自己',status:'active',verdict:'',
+      goals:[{id:'g1',text:'認識工具',done:true},{id:'g2',text:'學會穿線',done:true},{id:'g3',text:'完成一件小作品',done:false},{id:'g4',text:'記錄自己的感受',done:false}],
+      logs:[{date:addDays(t,-2),minutes:40,fun:4,diff:3,energy:'up',drive:'self',note:'第一次穿線，很專心'},{date:addDays(t,-1),minutes:30,fun:3,diff:4,energy:'flat',drive:'mid',note:'縫直線比想像難'}]}],
+    enc:{}
+  };
+}
+function normalize(o){
+  (o.quests||[]).forEach(q=>{ if (!q.slot) q.slot = SLOT_DEF[q.id] || 'any'; });
+  if (!o.prefs) o.prefs = {view:'slot',open:{}};
+  if (!o.prefs.open) o.prefs.open = {};
+  (o.trials||[]).forEach(t=>{
+    if (!t.goals) t.goals = (t.id==='t1' ? ['認識工具','學會穿線','完成一件小作品','記錄自己的感受'] : DEFAULT_GOALS).map(x=>({id:uid(),text:x,done:false}));
+    if (!t.logs) t.logs = [];
+  });
+  return o;
+}
+function load(){
+  try{ const raw = localStorage.getItem(KEY); if (raw){ const o = JSON.parse(raw); if (o && o.v===1) return normalize(o); } }catch(e){}
+  return defaultState();
+}
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+let S = load();
+const ui = {tab:'home', sub:'quests', stamped:null, ritual:false, draft:{}, tut:0, shaken:false, defDate:'', defOpen:{}};
+const barMem = {};
+const startW = k => barMem[k]!=null ? barMem[k] : 0;
+
+/* ---------- derived ---------- */
+function stageIndex(){
+  let idx = 0;
+  for (let i=0;i<STAGES.length;i++){
+    const s = STAGES[i];
+    if (s.f && !S.user.foundation) break;
+    if (S.user.cultivation >= s.at) idx = i; else break;
+  }
+  return idx;
+}
+function progress(){
+  const i = stageIndex(), cur = STAGES[i], c = S.user.cultivation, next = STAGES[i+1];
+  let target = null, label;
+  if (next && next.f && !S.user.foundation){ target = BREAK.cultivation; label = '距離突破築基'; }
+  else if (next){ target = next.at; label = '距離'+next.name; }
+  else label = '金丹尚未開放';
+  if (target == null) return {i,cur,pct:100,left:0,label};
+  return {i,cur,pct:clamp((c-cur.at)/(target-cur.at)*100,0,100),left:Math.max(0,target-c),label};
+}
+function practiceDaySet(){
+  const set = new Set(S.events.filter(e=>e.type==='practice').map(e=>e.date));
+  S.repairs.forEach(r=>set.add(r.missed));
+  return set;
+}
+function streakInfo(){
+  const t = today(), y = addDays(t,-1), dby = addDays(y,-1), days = practiceDaySet();
+  const back = d => { let n = 0; while (days.has(d)){ n++; d = addDays(d,-1); } return n; };
+  let state = 'normal', streak = 0;
+  if (!days.has(y) && days.has(dby)){ state = 'shaken'; streak = back(dby); }
+  else if (days.has(t)) streak = back(t);
+  else if (days.has(y)) streak = back(y);
+  const sorted = [...days].sort(); let run = 0, best = 0, prev = null;
+  sorted.forEach(d => { run = (prev && diffDays(d,prev)===1) ? run+1 : 1; best = Math.max(best,run); prev = d; });
+  if (best > S.user.longestStreak) S.user.longestStreak = best;
+  return {streak,state,days};
+}
+const streakName = n => { const f = STREAK_NAMES.find(x=>n>=x[0]); return f ? f[1] : '靈氣待聚'; };
+const questCountOn = d => S.events.filter(e=>e.type==='practice' && e.src==='quest' && e.date===d).length;
+const rewardText = r => {
+  const p = [];
+  if (r.xp) p.push('+'+r.xp+' 修為');
+  for (const k in (r.attrs||{})) if (r.attrs[k]) p.push('+'+r.attrs[k]+' '+ATTR_NAME[k]);
+  if (r.daoHeart) p.push('+'+r.daoHeart+' 道心');
+  return p.join('　');
+};
+
+/* ---------- mutations ---------- */
+function addEvent(ev){
+  if (ev.key && S.events.some(e=>e.key===ev.key)) return false;
+  S.events.push({id:uid(),ts:Date.now(),date:today(),rewards:{},...ev});
+  return true;
+}
+function removeEvent(key){
+  const i = S.events.findIndex(e=>e.key===key);
+  return i<0 ? null : S.events.splice(i,1)[0];
+}
+function applyRewards(r,sign=1){
+  S.user.cultivation = Math.max(0, S.user.cultivation + sign*(r.xp||0));
+  for (const k in (r.attrs||{})) S.attrs[k] = Math.max(0, S.attrs[k] + sign*r.attrs[k]);
+  S.user.daoHeart = clamp(S.user.daoHeart + sign*(r.daoHeart||0), 0, 100);
+}
+function checkStage(){
+  const idx = stageIndex();
+  if (idx > S.user.stageReached){
+    for (let i=S.user.stageReached+1;i<=idx;i++) addEvent({type:'growth',key:'stage:'+i,title:'進境：'+STAGES[i].name,note:'修為累積，境界提升。'});
+    S.user.stageReached = idx;
+    toast('進境：'+STAGES[idx].name);
+  }
+}
+function syncRepair(){
+  const t = today(), y = addDays(t,-1), dby = addDays(y,-1), q = questCountOn(t);
+  S.repairs = S.repairs.filter(r => {
+    if (r.by === t && q < 3){ removeEvent('repair:'+r.missed); return false; }
+    return true;
+  });
+  const days = practiceDaySet();
+  if (q >= 3 && !days.has(y) && days.has(dby)){
+    S.repairs.push({missed:y,by:t});
+    addEvent({type:'growth',key:'repair:'+y,title:'補昨日之功',note:'道心震盪已平復，連續修煉得以延續。'});
+    toast('補昨日之功');
+  }
+}
+function toggleQuest(id){
+  const q = S.quests.find(x=>x.id===id); if (!q || !q.active) return;
+  const key = 'q:'+id+':'+today();
+  const ex = removeEvent(key);
+  if (ex) applyRewards(ex.rewards,-1);
+  else {
+    const rewards = {xp:q.xp, attrs:{[q.attr]:q.ar}};
+    addEvent({type:'practice',src:'quest',key,title:q.name,note:q.desc,rewards});
+    applyRewards(rewards);
+    ui.stamped = id;
+    const act = S.quests.filter(x=>x.active);
+    if (act.every(x=>S.events.some(e=>e.key==='q:'+x.id+':'+today()))) toast('今日一課，功德圓滿。');
+  }
+  syncRepair(); checkStage(); save(); render();
+}
+function seedDays(n){
+  const t = today(), act = S.quests.filter(q=>q.active); if (!act.length) return;
+  for (let k=n;k>=1;k--){
+    const date = addDays(t,-k);
+    for (let j=0;j<3;j++){
+      const q = act[(k+j)%act.length], key = 'q:'+q.id+':'+date, rewards = {xp:q.xp,attrs:{[q.attr]:q.ar}};
+      if (addEvent({type:'practice',src:'quest',key,title:q.name,note:q.desc,rewards,date,ts:Date.now()-k*864e5+j})) applyRewards(rewards);
+    }
+  }
+  if (diffDays(t,S.user.createdAt) < n) S.user.createdAt = addDays(t,-n);
+}
+
+/* ---------- toast / sheet / ritual ---------- */
+let toastT;
+function toast(msg){ const el = $('#toast'); el.textContent = msg; el.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(()=>el.classList.remove('on'),2200); }
+function sheet(html){ const s = $('#sheet'); s.innerHTML = '<div class="scrim" data-act="closeSheet"></div><div class="panel">'+html+'</div>'; s.classList.add('on'); }
+function closeSheet(){ const s = $('#sheet'); s.classList.remove('on'); s.innerHTML = ''; }
+
+function ritual(){
+  if (ui.ritual) return; ui.ritual = true;
+  const r = $('#ritual'); r.className = 'on';
+  r.innerHTML = '<div class="rings"><i></i><i></i><i></i></div><div class="flash"></div><div class="rlines" id="rl"></div>';
+  const lines = ['天地靈氣開始聚集……','經脈震動……','丹田靈氣壓縮……','轟！'];
+  lines.forEach((t,i)=>setTimeout(()=>{
+    const p = document.createElement('p'); p.textContent = t;
+    if (i===3){ p.className = 'boom'; r.querySelector('.flash').classList.add('go'); r.classList.add('shake'); }
+    $('#rl').appendChild(p);
+  }, 800 + i*1150));
+  setTimeout(()=>{
+    S.user.foundation = true; S.user.stageReached = stageIndex();
+    addEvent({type:'growth',key:'bt:foundation',title:'突破：築基成功',note:'靈氣壓縮成基，踏入築基境。',rewards:{daoHeart:5}});
+    applyRewards({daoHeart:5}); save();
+    r.className = 'on';
+    r.innerHTML = '<div class="flash go"></div><div class="win"><div class="seal">築基</div><h2>築基成功</h2><p>靈氣已凝成根基。修仙之路，才剛開始。</p><button class="btn" data-act="closeRitual">踏上仙途</button></div>';
+  }, 800 + 4*1150 + 800);
+}
+
+/* ---------- views ---------- */
+function bar(pct,cls,gate,key){ return '<div class="bar '+(cls||'')+'"><i data-k="'+(key||'')+'" data-w="'+pct+'" style="width:'+(key?startW(key):0)+'%"></i>'+(gate!=null?'<b class="gate" style="left:'+gate+'%"></b>':'')+'</div>'; }
+
+function home(){
+  const p = progress(), st = streakInfo(), t = today();
+  const day = diffDays(t,S.user.createdAt)+1;
+  const dh = clamp(S.user.daoHeart - (st.state==='shaken'?5:0),0,100);
+  const act = S.quests.filter(q=>q.active);
+  const doneN = act.filter(q=>S.events.some(e=>e.key==='q:'+q.id+':'+t)).length;
+  const qc = questCountOn(t);
+  const atGate = !S.user.foundation && p.cur.major==='練氣' && p.i===STAGES.findIndex(s=>s.name==='練氣九層');
+  const activeTrial = S.trials.find(x=>x.status==='active');
+
+  ui.shaken = st.state==='shaken';
+  const todayXp = S.events.reduce((a,e)=>a+(e.date===t && e.rewards && e.rewards.xp ? e.rewards.xp : 0),0);
+  let h = '<section class="hero'+(ui.shaken?' shaken':'')+'"><svg class="mount" viewBox="0 0 400 130" preserveAspectRatio="none" aria-hidden="true">'
+    +'<path d="M0 130V70c30-14 60-30 96-26s54 22 88 20 62-24 108-22 72 18 108 24v64z" fill="currentColor" opacity=".10"/>'
+    +'<path d="M0 130V88c40-16 66-30 104-28s56 20 92 20 70-30 116-26 58 14 88 22v54z" fill="currentColor" opacity=".17"/>'
+    +'<path d="M0 96c60-8 100 6 160-2s110 6 240-4" fill="none" stroke="currentColor" stroke-opacity=".22" stroke-width="1.4" stroke-dasharray="3 6"/>'
+    +'<path d="M0 130V108c46-10 70-22 110-20s64 16 100 14 76-24 112-18 50 10 78 16v30z" fill="currentColor" opacity=".26"/></svg>'
+    +'<svg class="moon" viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="37" fill="none" stroke="var(--glow)" stroke-opacity=".5" stroke-dasharray="1.5 4"/>'
+    +'<circle cx="40" cy="40" r="28" fill="var(--seal)" fill-opacity=".92"/><g fill="var(--paper)"><ellipse cx="40" cy="27.5" rx="2.6" ry="3.2"/><circle cx="40" cy="34" r="3.8"/>'
+    +'<path d="M32.5 53Q33.5 40.5 40 38.5Q46.5 40.5 47.5 53Z"/><ellipse cx="40" cy="54" rx="13" ry="3.6"/></g>'
+    +'<rect x="8" y="56.5" width="64" height="3" fill="var(--paper)" fill-opacity=".55"/><rect x="14" y="62" width="52" height="2" fill="var(--paper)" fill-opacity=".4"/></svg>'
+    +'<div class="orbs"><i></i><i></i><i></i><i></i><i></i></div>'
+    +'<div class="hero-body"><div class="realm-v" aria-label="'+esc(p.cur.name)+'">'+[...p.cur.name].map(c=>'<span>'+esc(c)+'</span>').join('')+'</div><div class="hero-meta">'
+    +'<div class="dao">'+esc(S.user.daoName)+'</div>'
+    +'<div class="dayline"><span>第 '+day+' 日</span><b>'+streakName(st.streak)+'</b></div>'
+    +'<div class="xp"><b>'+num(S.user.cultivation)+'</b><span>修為</span>'+(todayXp>0?'<em>今日 +'+todayXp+'</em>':'')+'</div>'
+    +'<div class="qi-wrap"><div class="qi"><i data-k="hero" data-w="'+p.pct.toFixed(1)+'" style="width:'+startW('hero')+'%"></i></div>'
+    +'<div class="qi-cap"><span>'+p.label+'</span><span>'+(p.left>0?'尚差 '+num(p.left):'')+'</span></div></div>'
+    +'</div></div>'
+    +stairs(p.i)
+    +'<div class="chips"><span class="chip">連續修煉 '+st.streak+' 日</span><span class="chip">道心 '+dh+'</span>'
+    +(ui.shaken?'<span class="chip crit">⚡ 道心震盪</span>':'')+'</div></section>';
+
+  if (ui.shaken)
+    h += '<section class="crisis-card" role="alert"><div class="stripe"></div><div class="cb">'
+      + '<div class="cr-top"><svg class="bolt" viewBox="0 0 24 32" width="17" height="23" aria-hidden="true"><path d="M14 0L2 18h8l-3 14L22 12h-9z" fill="#ffd54a"/></svg><h2 class="cr-title">道心震盪</h2></div>'
+      + '<p class="cr-line">靈氣逆行！連續修煉<b>'+st.streak+'</b>日即將歸零</p>'
+      + '<div class="cr-row"><div class="cr-pips">'+[0,1,2].map(i=>'<span class="pip'+(qc>i?' on':'')+'">'+(qc>i?'✓':'')+'</span>').join('')+'</div>'
+      + '<div class="cr-info"><span>補修 <b>'+Math.min(qc,3)+' / 3</b></span><span>限時 <b id="cd">'+fmtLeft()+'</b></span></div>'
+      + '<button class="btn crit" data-act="scrollQ">立刻補修</button></div></div></section>';
+
+  if (atGate){
+    const rows = [
+      ['修為 '+num(S.user.cultivation)+' / '+num(BREAK.cultivation), S.user.cultivation>=BREAK.cultivation],
+      ['鍛體 '+S.attrs.body+' / '+BREAK.attrs.body, S.attrs.body>=BREAK.attrs.body],
+      ['悟道 '+S.attrs.wisdom+' / '+BREAK.attrs.wisdom, S.attrs.wisdom>=BREAK.attrs.wisdom],
+      ['連續修煉 '+st.streak+' / '+BREAK.streak+' 日', st.streak>=BREAK.streak]
+    ];
+    const ready = rows.every(r=>r[1]);
+    h += '<section class="bt"><h3>瓶頸：築基</h3><div class="note">你的靈氣已積累至瓶頸。但最難的從來不是積累，而是突破。</div><div style="margin-top:8px">'
+      + rows.map(r=>'<div class="need '+(r[1]?'met':'')+'"><span class="ok">'+(r[1]?'✓':'')+'</span><span>'+r[0]+'</span></div>').join('')
+      + '</div><div class="row" style="margin-top:10px"><button class="btn seal" data-act="breakthrough" '+(ready?'':'disabled')+'>開始築基</button>'
+      + (ready?'':'<span class="note">尚有條件未達成</span>')+'</div></section>';
+  }
+
+  let rec = S.enc[t];
+  if (!rec){
+    const pool = ENCS.filter(e=>!e.need || st.streak>=e.need);
+    rec = S.enc[t] = {id:pool[hash(t+'|'+S.user.createdAt)%pool.length].id, done:false}; save();
+  }
+  const enc = ENCS.find(e=>e.id===rec.id);
+  h += '<section class="enc"><span class="seal">遇</span><div style="flex:1"><h3>今日奇遇　'+enc.name+'</h3><p>'+enc.cond+'</p><p style="color:var(--jade)">'+rewardText(enc.r)+'</p></div>'
+    + (rec.done ? '<span class="chip gold">已領悟</span>' : '<button class="btn sm" data-act="encDone">完成</button>') + '</section>';
+
+  const isDone = q => S.events.some(e=>e.key==='q:'+q.id+':'+t);
+  const qRow = q => {
+    const d = isDone(q);
+    return '<button class="quest '+(d?'done':'')+(ui.stamped===q.id?' fresh':'')+'" data-act="toggle" data-id="'+q.id+'">'
+      +'<span class="sbox"><b>成</b></span><span class="qm"><span class="qn">'+esc(q.name)+'</span><span class="qd">'+esc(q.desc)+'</span></span>'
+      +'<span class="qr">+'+q.xp+' 修為<br>+'+q.ar+' '+ATTR_NAME[q.attr]+'</span></button>';
+  };
+  h += '<section class="block" id="quests"><div class="block-h">今日功課<small>'+doneN+' / '+act.length+'</small></div>'
+    + '<div class="qtools"><span>現在是'+SLOTS.find(x=>x[0]===curSlot())[1]+'時段</span>'+viewToggle()+'</div>';
+  h += slotGroups(act,'t',qRow,isDone,(items,d)=>d+' / '+items.length) || '<p class="note" style="padding:14px 0">尚無功課。到「修行」頁新增第一門功法。</p>';
+  h += S.trials.filter(x=>x.status==='active').map(x=>{
+    const d = x.logs.some(l=>l.date===t);
+    return '<button class="quest opt '+(d?'done':'')+'" data-act="trialLogOpen" data-id="'+x.id+'"><span class="sbox"><b>記</b></span>'
+      +'<span class="qm"><span class="qn">試道記錄：'+esc(x.name)+'</span><span class="qd">選修，記下今天的感受，不計入今日功課</span></span>'
+      +'<span class="qr">'+(d?'已記錄':'+2 修為')+'</span></button>';
+  }).join('');
+  if (act.length && doneN===act.length) h += '<p class="note" style="margin:10px 0 0;text-align:center;font-family:var(--serif)">今日一課，功德圓滿。</p>';
+  h += '</section>';
+
+  if (activeTrial){
+    const d = clamp(diffDays(t,activeTrial.start)+1,1,activeTrial.days), ts = trialStats(activeTrial);
+    const logged = activeTrial.logs.some(l=>l.date===t);
+    h += '<section class="block"><div class="block-h">本週試道<small>'+esc(activeTrial.name)+'　第 '+d+' / '+activeTrial.days+' 日</small></div><div style="padding-top:10px">'
+      + bar((d/activeTrial.days*100).toFixed(0),'gold',null,'tstrip')
+      + '<div class="qi-cap"><span>目標 '+ts.gDone+' / '+ts.gTotal+'</span><span>'+(logged?'今日已記錄':'今日尚未記錄')+'</span></div>'
+      + '<div class="row" style="margin-top:10px"><span class="note" style="flex:1">'+esc(activeTrial.purpose||'')+'</span><button class="btn sm ghost" data-act="tab" data-v="trial">查看</button></div></div></section>';
+  }
+  return h;
+}
+
+function train(){
+  let h = '<div class="seg">'
+    + [['quests','功法'],['skills','百藝'],['attrs','屬性']].map(x=>'<button class="'+(ui.sub===x[0]?'on':'')+'" data-act="sub" data-v="'+x[0]+'">'+x[1]+'</button>').join('')+'</div>';
+  if (ui.sub==='quests'){
+    const mRow = q => {
+      const n = S.events.filter(e=>e.key&&e.key.startsWith('q:'+q.id+':')).length;
+      return '<div class="swrow" data-id="'+q.id+'">'
+        +'<div class="sw-lead"><button class="swb pause" data-act="pause" data-id="'+q.id+'">'+(q.active?'暫停':'啟用')+'</button></div>'
+        +'<div class="sw-trail"><button class="swb edit" data-act="editQuestOpen" data-id="'+q.id+'">調整</button><button class="swb del" data-act="delQuestAsk" data-id="'+q.id+'">刪除</button></div>'
+        +'<div class="sw-main quest '+(q.active?'':'off')+'"><span class="qm"><span class="qn">'+esc(q.name)+(q.active?'':'（已暫停）')+'</span><span class="qd">'+esc(q.desc)+'　累計 '+n+' 次</span>'
+        +'<span class="qd" style="color:var(--jade)">每次 +'+q.xp+' 修為　+'+q.ar+' '+ATTR_NAME[q.attr]+'</span></span>'
+        +'<button class="dots" data-act="questMenu" data-id="'+q.id+'" aria-label="更多">⋯</button></div></div>';
+    };
+    h += '<div class="qtools"><span>共 '+S.quests.length+' 門功法</span>'+viewToggle()+'</div>';
+    h += '<p class="hintline">左右滑動可暫停、調整、刪除；長按拖曳可排序，或移到其他時段。</p>';
+    h += slotGroups(S.quests,'m',mRow,()=>false,(items)=>items.filter(q=>q.active).length+' 項');
+    h += '<div class="row" style="margin-top:16px"><button class="btn pri" data-act="addQuestOpen">新增功法</button></div>';
+  } else if (ui.sub==='skills'){
+    h += S.skills.map(s=>{
+      const st = skillStage(s);
+      return '<div class="skill"><div class="skill-h"><b>'+esc(s.name)+'</b><span class="chip">'+esc(s.path)+'</span></div>'
+        +'<div class="note" style="margin:2px 0 8px">境界：<b style="color:var(--ink);font-family:var(--serif)">'+st.name+'</b></div>'+bar(st.pct.toFixed(0),'',null,'sk:'+s.id)
+        +'<div class="stats3"><div><b>'+s.count+'</b><span>練習次數</span></div><div><b>'+s.works.length+'</b><span>作品</span></div><div><b>'+(s.minutes/60).toFixed(1)+'</b><span>練習時數</span></div></div>'
+        +'<div class="note">'+(st.next?'下一階段「'+st.next[0]+'」：再練習 '+st.need+' 次':'已臻圓滿')+'</div>'
+        +(s.works.length?'<div class="chips" style="margin-top:8px">'+s.works.slice(-6).map(w=>'<span class="chip">'+esc(w.name)+'</span>').join('')+'</div>':'')
+        +'<div class="row" style="margin-top:12px"><button class="btn sm pri" data-act="practiceOpen" data-id="'+s.id+'">記錄一次練習</button></div></div>';
+    }).join('');
+    h += '<div class="row" style="margin-top:16px"><button class="btn" data-act="addSkillOpen">入道：新增百藝</button></div>';
+  } else {
+    h += attrsView();
+  }
+  return h;
+}
+
+function attrTier(k){ let i = 0; TIERS.forEach((t,j)=>{ if (S.attrs[k]>=t) i = j; }); return i; }
+function attrBest(){ let best = null; ATTRS.forEach(([k])=>{ if (S.attrs[k]>0 && (!best || S.attrs[k]>S.attrs[best])) best = k; }); return best; }
+function attrArt(){
+  const cap = Math.max(100, ...Object.values(S.attrs)), best = attrBest();
+  const pos = [[80,110],[126,52],[180,32],[234,52],[280,110]];
+  let s = '<svg viewBox="0 0 360 226" role="img" aria-label="打坐修煉圖">'
+    + '<defs><radialGradient id="halo"><stop offset="0" style="stop-color:var(--glow);stop-opacity:.5"/><stop offset="1" style="stop-color:var(--glow);stop-opacity:0"/></radialGradient>'
+    + '<radialGradient id="fadeG" cx=".5" cy=".55" r=".62"><stop offset=".5" stop-color="#fff"/><stop offset="1" stop-color="#000"/></radialGradient><mask id="fadeM"><rect width="360" height="226" fill="url(#fadeG)"/></mask></defs>'
+    + '<circle cx="180" cy="112" r="92" fill="url(#halo)"/>'
+    + '<circle cx="180" cy="112" r="56" fill="var(--jade)" fill-opacity=".10"/>'
+    + '<g class="aura"><circle cx="180" cy="112" r="76" fill="none" stroke="var(--glow)" stroke-opacity=".55" stroke-width="1.5" stroke-dasharray="2 7" stroke-linecap="round"/>'
+    + '<circle cx="180" cy="112" r="90" fill="none" stroke="var(--glow)" stroke-opacity=".25" stroke-width="1" stroke-dasharray="14 12"/></g>'
+    + '<g mask="url(#fadeM)"><path d="M0 226V178c40-24 70-44 110-40s60 26 90 28 60-30 100-36 40 10 60 20v76z" fill="var(--jade)" fill-opacity=".14"/>'
+    + '<path d="M0 226V202c50-14 80-24 120-20s70 20 110 16 90-22 130-12v42z" fill="var(--jade)" fill-opacity=".24"/></g>';
+  ATTRS.forEach(([k],i)=>{
+    const f = clamp(S.attrs[k]/cap,0,1), pt = pos[i];
+    s += '<line x1="180" y1="124" x2="'+pt[0]+'" y2="'+pt[1]+'" stroke="var(--glow)" stroke-opacity="'+(0.15+0.6*f).toFixed(2)+'" stroke-width="'+(1+2.5*f).toFixed(1)+'" stroke-linecap="round"/>';
+  });
+  s += '<ellipse cx="180" cy="180" rx="86" ry="7" fill="var(--ink)" fill-opacity=".10"/>'
+    + '<g fill="var(--ink)">'
+    + '<path d="M162 150c-2-20 0-40 6-46 4-4 20-4 24 0 6 6 8 26 6 46z"/>'
+    + '<path d="M118 170c18-18 48-20 62-14 14-6 44-4 62 14-20 12-104 12-124 0z"/>'
+    + '<ellipse cx="180" cy="77" rx="5" ry="6"/><circle cx="180" cy="90" r="11"/>'
+    + '<path d="M166 108c-12 16-14 34 0 50M194 108c12 16 14 34 0 50" fill="none" stroke="var(--ink)" stroke-width="8" stroke-linecap="round"/>'
+    + '<circle cx="166" cy="159" r="5"/><circle cx="194" cy="159" r="5"/></g>'
+    + '<circle cx="180" cy="138" r="16" fill="url(#halo)"/><circle cx="180" cy="138" r="4" fill="var(--gold)"/>';
+  ATTRS.forEach(([k,name],i)=>{
+    const f = clamp(S.attrs[k]/cap,0,1), pt = pos[i], top = k===best, tn = TIER_NAMES[k][attrTier(k)];
+    s += '<g><rect x="'+(pt[0]-17)+'" y="'+(pt[1]-17)+'" width="34" height="34" rx="3" fill="'+(top?'var(--seal)':'var(--paper)')+'" stroke="'+(top?'var(--seal)':'var(--jade)')+'" stroke-width="1.5"/>'
+      + '<text x="'+pt[0]+'" y="'+(pt[1]+6)+'" text-anchor="middle" font-size="18" font-weight="900" font-family="var(--serif)" fill="'+(top?'#fff':'var(--ink)')+'">'+name[0]+'</text>'
+      + '<rect x="'+(pt[0]-14)+'" y="'+(pt[1]+12)+'" width="'+(28*f).toFixed(1)+'" height="2.5" fill="'+(top?'#fff':'var(--jade)')+'"/>'
+      + '<text x="'+pt[0]+'" y="'+(pt[1]+32)+'" text-anchor="middle" font-size="11" font-family="var(--serif)" font-weight="700" fill="var(--ink)">'+tn+' '+S.attrs[k]+'</text></g>';
+  });
+  return s+'</svg>';
+}
+function attrsView(){
+  const best = attrBest();
+  let h = '<div class="art">'+attrArt()+'</div><p class="art-cap">'
+    + (best ? '目前根基最深：'+ATTR_NAME[best]+'（'+TIER_NAMES[best][attrTier(best)]+'）' : '根基尚未凝聚，完成功課即可開始修煉。')+'</p>';
+  h += ATTRS.map(([k,name])=>{
+    const v = S.attrs[k], ti = attrTier(k), names = TIER_NAMES[k], nextT = TIERS[ti+1], gate = BREAK.attrs[k];
+    const segs = [0,1,2,3,4].map(j=>{
+      const pct = clamp((v-TIERS[j])/(TIERS[j+1]-TIERS[j])*100,0,100), key = 'at:'+k+':'+j;
+      return '<span><i data-k="'+key+'" data-w="'+pct.toFixed(0)+'" style="width:'+startW(key)+'%"></i></span>';
+    }).join('');
+    const foot = nextT!=null ? '距離「'+names[ti+1]+'」尚差 '+(nextT-v) : '已臻圓滿';
+    const chip = gate && !S.user.foundation ? '<span class="chip '+(v>=gate?'gold':'')+'">築基需 '+gate+(v>=gate?' ✓':'')+'</span>' : '';
+    return '<div class="attr '+(k===best?'top':'')+'"><div class="attr-g">'+name[0]+'</div><div class="attr-m">'
+      +'<div class="attr-h"><b>'+name+'</b><span class="tier">'+names[ti]+'</span><em>'+v+'</em></div>'
+      +'<div class="seg5">'+segs+'</div><div class="attr-f"><span>'+foot+'</span>'+chip+'</div></div></div>';
+  }).join('');
+  return h;
+}
+
+function skillStage(s){
+  const L = LADDER[s.name] || GEN; let i = 0;
+  L.forEach((x,k)=>{ if (s.count>=x[1]) i = k; });
+  const nx = L[i+1];
+  return {name:L[i][0], next:nx, need:nx?nx[1]-s.count:0, pct:nx?(s.count-L[i][1])/(nx[1]-L[i][1])*100:100};
+}
+
+function trialStats(x){
+  const L = [...(x.logs||[])].sort((a,b)=>a.date<b.date?-1:1), G = x.goals||[], n = L.length;
+  const avg = (rows,k) => rows.length ? rows.reduce((a,l)=>a+l[k],0)/rows.length : 0;
+  const share = (k,v) => n ? L.filter(l=>l[k]===v).length/n : 0;
+  let trend = 0;
+  if (n>=4){ const h = Math.floor(n/2); trend = avg(L.slice(n-h),'fun') - avg(L.slice(0,h),'fun'); }
+  return {gDone:G.filter(g=>g.done).length, gTotal:G.length, n, mins:L.reduce((a,l)=>a+(l.minutes||0),0),
+    fun:avg(L,'fun'), diff:avg(L,'diff'), self:share('drive','self'), forced:share('drive','forced'), up:share('energy','up'), down:share('energy','down'), trend};
+}
+function trialHint(s){
+  if (s.n < 3) return '記錄還不到 3 天，判斷依據偏少，可以再多試幾天。';
+  const rate = s.gTotal ? s.gDone/s.gTotal : 0;
+  let t;
+  if (s.fun>=3.8 && s.self>=0.5 && s.down<=0.3) t = '有趣程度高，也多半是主動想做，資料偏向「此道可修」。';
+  else if (s.fun<=2.5 && s.forced>=0.5) t = '多半是逼自己在做，也不太有趣，資料偏向「暫不適合」。';
+  else t = '訊號有好有壞，可以選「再試一週」多收集一些感受。';
+  if (rate<0.5 && s.fun>=3.5) t += '目標完成率偏低但不無聊，可能是目標太大或時間不夠，不一定是不適合。';
+  return t;
+}
+const kv = (a,b) => '<div class="kv"><span>'+a+'</span><b>'+b+'</b></div>';
+function evidence(x,s){
+  let h = '<div class="evid">'+kv('目標達成',s.gDone+' / '+s.gTotal)+kv('記錄天數',s.n+' / '+x.days+' 日')+kv('投入時間',(s.mins/60).toFixed(1)+' 小時');
+  if (s.n){
+    const tr = s.trend>=0.5?'　漸入佳境':(s.trend<=-0.5?'　興趣下滑':'');
+    h += kv('平均有趣',s.fun.toFixed(1)+' / 5'+tr)+kv('平均吃力',s.diff.toFixed(1)+' / 5')
+      + kv('主動想做',Math.round(s.self*100)+'% 的日子')+kv('需要逼自己',Math.round(s.forced*100)+'% 的日子')
+      + kv('做完更有精神',Math.round(s.up*100)+'% 的日子')+kv('做完更疲憊',Math.round(s.down*100)+'% 的日子');
+  }
+  return h+'</div>';
+}
+function trialActive(x,t){
+  const d = clamp(diffDays(t,x.start)+1,1,x.days), s = trialStats(x), logged = x.logs.some(l=>l.date===t);
+  let h = '<div class="skill"><div class="skill-h"><b>'+esc(x.name)+'</b><span class="chip gold">進行中</span></div>'
+    + '<div class="note" style="margin:2px 0 8px">'+esc(x.purpose||'')+'</div>'
+    + bar((d/x.days*100).toFixed(0),'gold',null,'tr:'+x.id)
+    + '<div class="qi-cap"><span>第 '+d+' 日，共 '+x.days+' 日</span><span>始於 '+x.start+'</span></div>';
+  h += '<div class="block-h" style="font-size:15px;margin-top:16px">要確認的目標<small>'+s.gDone+' / '+s.gTotal+'</small></div>'
+    + x.goals.map(g=>'<button class="goal '+(g.done?'done':'')+'" data-act="trialGoal" data-id="'+x.id+'" data-v="'+g.id+'"><span class="gbox">✓</span><span class="gt">'+esc(g.text)+'</span></button>').join('')
+    + '<div class="row" style="margin-top:8px"><button class="btn sm ghost" data-act="goalAddOpen" data-id="'+x.id+'">新增目標</button></div>';
+  h += '<div class="block-h" style="font-size:15px;margin-top:18px">判斷依據<small>已記錄 '+s.n+' 日</small></div>'+evidence(x,s);
+  const recent = [...x.logs].sort((a,b)=>a.date<b.date?1:-1).slice(0,3);
+  h += recent.map(l=>'<div class="ev trial"><span class="g">記</span><div><b>'+l.date+'　有趣 '+l.fun+'　吃力 '+l.diff+'</b><small>'+l.minutes+' 分鐘　'+ENERGY[l.energy]+'　'+DRIVE[l.drive]+'</small>'+(l.note?'<small>'+esc(l.note)+'</small>':'')+'</div></div>').join('');
+  h += '<div class="row" style="margin-top:14px"><button class="btn sm pri" data-act="trialLogOpen" data-id="'+x.id+'">'+(logged?'更新今日記錄':'記錄今日感受')+'</button><button class="btn sm" data-act="trialFinishOpen" data-id="'+x.id+'">結束並評估</button></div></div>';
+  return h;
+}
+function trialDone(x){
+  const s = trialStats(x), label = x.verdict==='worth' ? '此道可修' : '此道暫不適合';
+  return '<div class="skill"><div class="skill-h"><b>'+esc(x.name)+'</b><span class="chip '+(x.verdict==='worth'?'gold':'')+'">'+label+'</span></div>'
+    + '<div class="note">'+esc(x.purpose||'')+'　共 '+x.days+' 日</div>'
+    + '<div class="note" style="margin-top:6px">目標 '+s.gDone+' / '+s.gTotal+(s.n?'　有趣 '+s.fun.toFixed(1)+'　吃力 '+s.diff.toFixed(1):'')+'　共 '+(s.mins/60).toFixed(1)+' 小時</div>'
+    + (x.review && x.review.note ? '<div class="banner">'+esc(x.review.note)+'</div>' : '')
+    + (x.verdict==='worth' && !x.skillId ? '<div class="row" style="margin-top:10px"><button class="btn sm pri" data-act="skillOfferOpen" data-id="'+x.id+'">入道：加入百藝</button></div>' : '')
+    + '</div>';
+}
+function trial(){
+  const t = today();
+  let h = '<div class="block-h" style="margin-top:6px">試道<small>親自走一段路，看看是不是自己的道</small></div>';
+  const list = [...S.trials].sort((a,b)=>(a.status==='active'?0:1)-(b.status==='active'?0:1));
+  h += list.map(x=>x.status==='active' ? trialActive(x,t) : trialDone(x)).join('') || '<p class="note" style="padding:16px 0">還沒有試道。想知道一件事適不適合自己，就試一週。</p>';
+  h += '<div class="row" style="margin-top:16px"><button class="btn pri" data-act="trialOpen">開始新的試道</button></div>';
+  h += '<p class="note" style="margin-top:14px">「此道暫不適合」不是失敗，只是把路看清楚了。</p>';
+  return h;
+}
+
+function log(){
+  const evs = [...S.events].sort((a,b)=>b.ts-a.ts);
+  if (!evs.length) return '<div class="block-h" style="margin-top:6px">修仙錄</div><p class="note" style="padding:18px 0">尚無紀錄。完成第一項功課，落下第一筆。</p><button class="btn pri" data-act="tab" data-v="home">回洞府</button>';
+  const byDay = {};
+  evs.forEach(e=>{ (byDay[e.date] = byDay[e.date]||[]).push(e); });
+  let h = '<div class="block-h" style="margin-top:6px">修仙錄<small>共 '+evs.length+' 筆</small></div>';
+  Object.keys(byDay).sort().reverse().slice(0,40).forEach(d=>{
+    const xp = byDay[d].reduce((a,e)=>a+((e.rewards&&e.rewards.xp)||0),0);
+    h += '<div class="tl-day"><span>第 '+(diffDays(d,S.user.createdAt)+1)+' 日</span><small>'+d+(xp?'　修為 +'+xp:'')+'</small></div>';
+    h += byDay[d].map(e=>'<div class="ev '+e.type+'"><span class="g">'+EV_G[e.type]+'</span><div><b>'+esc(e.title)+'</b>'
+      +(e.note?'<small>'+esc(e.note)+'</small>':'')+(rewardText(e.rewards||{})?'<small style="color:var(--jade)">'+rewardText(e.rewards)+'</small>':'')+'</div></div>').join('');
+  });
+  return h;
+}
+
+function radar(){
+  const cx = 160, cy = 166, R = 100, NR = 128, best = attrBest();
+  const ang = i => -Math.PI/2 + i*2*Math.PI/5;
+  const P = (i,r) => [cx+Math.cos(ang(i))*r, cy+Math.sin(ang(i))*r];
+  const fp = a => a[0].toFixed(1)+','+a[1].toFixed(1);
+  const ring = f => ATTRS.map((_,i)=>fp(P(i,R*f))).join(' ');
+  const tierR = v => { let i = 0; TIERS.forEach((t,j)=>{ if (v>=t) i = j; }); return i>=5 ? R : Math.max(6, R*(i+(v-TIERS[i])/(TIERS[i+1]-TIERS[i]))/5); };
+  const data = ATTRS.map(([k],i)=>P(i,tierR(S.attrs[k])));
+  const dpts = data.map(fp).join(' ');
+  let s = '<svg viewBox="0 0 320 320" role="img" aria-label="五大屬性靈盤">'
+    + '<defs><linearGradient id="rg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--glow);stop-opacity:.6"/><stop offset="1" style="stop-color:var(--jade);stop-opacity:.22"/></linearGradient>'
+    + '<filter id="rb" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3.5"/></filter></defs>';
+  [5,4,3,2,1].forEach(n=>{
+    s += '<polygon points="'+ring(n/5)+'" fill="var(--jade)" fill-opacity="'+(n%2?0.06:0)+'" stroke="var(--line)" stroke-width="'+(n===5?1.5:1)+'"'+(n<5?' stroke-dasharray="3 4"':'')+' stroke-linejoin="round"/>';
+  });
+  ATTRS.forEach((_,i)=>{ const e = P(i,R); s += '<line x1="'+cx+'" y1="'+cy+'" x2="'+e[0].toFixed(1)+'" y2="'+e[1].toFixed(1)+'" stroke="var(--line)"/>'; });
+  s += '<polygon points="'+dpts+'" fill="none" stroke="var(--glow)" stroke-width="6" stroke-opacity=".6" stroke-linejoin="round" filter="url(#rb)"/>'
+    + '<polygon points="'+dpts+'" fill="url(#rg)" stroke="var(--jade)" stroke-width="2" stroke-linejoin="round"/>';
+  if (!S.user.foundation) [0,1].forEach(i=>{
+    const g = BREAK.attrs[ATTRS[i][0]], q = P(i,tierR(g)), x = q[0], y = q[1];
+    s += '<polygon points="'+x.toFixed(1)+','+(y-6).toFixed(1)+' '+(x+6).toFixed(1)+','+y.toFixed(1)+' '+x.toFixed(1)+','+(y+6).toFixed(1)+' '+(x-6).toFixed(1)+','+y.toFixed(1)+'" fill="var(--seal)" stroke="var(--paper)" stroke-width="1.5"/>';
+  });
+  data.forEach(d=>{ s += '<circle cx="'+d[0].toFixed(1)+'" cy="'+d[1].toFixed(1)+'" r="3.5" fill="var(--gold)" stroke="var(--paper)" stroke-width="1.5"/>'; });
+  s += '<circle cx="'+cx+'" cy="'+cy+'" r="2.5" fill="var(--gold)"/>';
+  ATTRS.forEach(([k,name],i)=>{
+    const n = P(i,NR), top = k===best, tn = TIER_NAMES[k][attrTier(k)];
+    const ly = i===0 ? n[1]-24 : n[1]+32;
+    s += '<g><rect x="'+(n[0]-17).toFixed(1)+'" y="'+(n[1]-17).toFixed(1)+'" width="34" height="34" rx="3" fill="'+(top?'var(--seal)':'var(--paper)')+'" stroke="'+(top?'var(--seal)':'var(--jade)')+'" stroke-width="1.5"/>'
+      + '<text x="'+n[0].toFixed(1)+'" y="'+(n[1]+7).toFixed(1)+'" text-anchor="middle" font-size="19" font-weight="900" font-family="var(--serif)" fill="'+(top?'#fff':'var(--ink)')+'">'+name[0]+'</text>'
+      + '<text x="'+n[0].toFixed(1)+'" y="'+ly.toFixed(1)+'" text-anchor="middle" font-size="11.5" font-weight="700" font-family="var(--serif)" fill="var(--ink)">'+tn+' '+S.attrs[k]+'</text></g>';
+  });
+  return '<div style="max-width:340px;margin:8px auto 0">'+s+'</svg></div>'
+    + '<p class="note" style="text-align:center;margin:0">每一圈是一個層次'+(S.user.foundation?'':'，紅點是築基所需')+'</p>';
+}
+
+function titles(){
+  const st = streakInfo(), anyPractice = S.events.some(e=>e.type==='practice');
+  const skillOk = S.skills.some(s=>s.count>=10);
+  return [
+    ['初入仙途',anyPractice],['三日不輟',S.user.longestStreak>=3],['經脈漸通',S.user.longestStreak>=7],
+    ['道心如鐵',S.user.daoHeart>=80],['百藝修士',skillOk],['築基有成',S.user.foundation],
+    ['百日築基',S.user.foundation && diffDays(today(),S.user.createdAt)<=100]
+  ];
+}
+
+function resume(){
+  const p = progress(), t = today();
+  const pdays = new Set(S.events.filter(e=>e.type==='practice').map(e=>e.date)).size;
+  const qn = S.events.filter(e=>e.src==='quest').length;
+  const works = S.skills.reduce((a,x)=>a+x.works.length,0);
+  const cells = [[pdays,'修煉天數'],[num(S.user.cultivation),'累計修為'],[qn,'完成功課'],[S.user.longestStreak,'最長連續'],[S.user.daoHeart,'道心'],[S.trials.length,'探索道路'],[S.skills.length,'掌握技能'],[works,'成器作品'],[0,'取得道印']];
+  const counts = {}; S.events.forEach(e=>{ if (e.type==='practice') counts[e.date] = (counts[e.date]||0)+1; });
+  const W = 16, dow = parse(t).getDay(), start = addDays(t,-((W-1)*7+dow));
+  let heat = '';
+  for (let w=0;w<W;w++) for (let d=0;d<7;d++){
+    const date = addDays(start,w*7+d);
+    if (date>t){ heat += '<i class="hc x"></i>'; continue; }
+    const c = counts[date]||0, lv = c===0?0:(c<=2?1:(c<=4?2:3));
+    heat += '<i class="hc l'+lv+(date===t?' now':'')+'" title="'+date+'"></i>';
+  }
+  return '<section class="cv"><div class="cv-h"><div><h3>修仙履歷</h3><p>'+esc(S.user.daoName)+'　'+esc(p.cur.name)+'</p></div><span class="seal">錄</span></div>'
+    + '<div class="cv-grid">'+cells.map(c=>'<div><b>'+c[0]+'</b><span>'+c[1]+'</span></div>').join('')+'</div>'
+    + '<div class="cv-sub">近 16 週修煉足跡</div><div class="heat">'+heat+'</div>'
+    + '<div class="heat-legend"><span>少</span><i class="hc l0"></i><i class="hc l1"></i><i class="hc l2"></i><i class="hc l3"></i><span>多</span></div>'
+    + '<p class="cv-foot">入道於 '+S.user.createdAt+'　至今 '+(diffDays(t,S.user.createdAt)+1)+' 日</p></section>';
+}
+
+function me(){
+  const p = progress(), st = streakInfo(), t = today();
+  const pdays = new Set(S.events.filter(e=>e.type==='practice').map(e=>e.date)).size;
+  const qn = S.events.filter(e=>e.src==='quest').length;
+  const curMajor = p.cur.major, curIdx = MAJORS.indexOf(curMajor);
+  let h = '<div class="id"><span class="seal">'+esc([...S.user.daoName][0]||'道')+'</span><div style="flex:1"><h2>'+esc(S.user.daoName)+'</h2>'
+    +'<div class="note">'+esc(p.cur.name)+'　修為 '+num(S.user.cultivation)+'</div></div><button class="btn sm ghost" data-act="renameOpen">改道號</button></div>';
+  h += resume();
+  h += '<section class="block"><div class="block-h">五大屬性</div>'+radar()+'</section>';
+  h += '<section class="block"><div class="block-h">稱號</div><div class="chips" style="margin-top:10px">'
+    + titles().map(x=>'<span class="chip '+(x[1]?'gold':'lock')+'">'+x[0]+'</span>').join('')+'</div></section>';
+  h += '<section class="block"><div class="block-h">境界</div><ul class="tree" style="padding-left:18px">'
+    + MAJORS.map((m,i)=>{
+      const open = OPEN_MAJORS.includes(m);
+      const cls = i<curIdx?'pass':(i===curIdx?'now':'');
+      const extra = i===curIdx ? '<small>'+esc(p.cur.name)+'</small>' : (!open?'<small>尚未開放</small>':'');
+      return '<li class="'+cls+'">'+m+extra+'</li>';
+    }).join('')+'</ul></section>';
+  h += '<section class="block"><div class="block-h">設定與備份</div>'
+    + (DEMO ? '<div class="demo"><div class="note">測試按鈕（網址有 ?demo=1 時才會出現），方便直接看到各階段畫面。</div><div class="row">'
+      + '<button class="btn sm" data-act="demoXp">修為 +100</button><button class="btn sm" data-act="demoDays">補入 10 日修煉</button><button class="btn sm seal" data-act="demoBreak">直達突破條件</button></div></div>' : '')
+    + '<div class="row" style="margin-top:12px"><button class="btn sm ghost" data-act="tutOpen">新手教學</button><button class="btn sm ghost" data-act="exportOpen">匯出備份</button><button class="btn sm ghost" data-act="importOpen">匯入備份</button><button class="btn sm ghost" data-act="resetOpen">重置</button></div>'
+    + '<p class="note" style="margin:16px 0 0;text-align:center">凡人修仙錄 v'+APP_VERSION+'<br>資料只存在這個瀏覽器裡，請定期匯出備份</p></section>';
+  return h;
+}
+
+const TUT = [
+  {g:'道',t:'現實做好一件事，角色就變強',h:'<p>這是把每日習慣變成修仙的打卡遊戲。你在現實中運動、閱讀、學習，回來打勾，角色的修為與境界就會成長。</p><p class="note">不用打怪，也不需要靈根。</p>'},
+  {g:'成',t:'每天做的事：打勾',h:'<ol><li>到「洞府」，找到「今日功課」</li><li>做完現實中的那件事</li><li>回來點那一列，蓋上印章</li></ol><p>打勾會得到兩樣東西：<b>修為</b>（經驗值，讓境界升級）和<b>屬性</b>（五種能力）。</p><div class="chips"><span class="chip">鍛體：運動</span><span class="chip">悟道：閱讀學習</span><span class="chip">養心：冥想早起</span><span class="chip">入世：工作</span><span class="chip">積德：助人</span></div>'},
+  {g:'進',t:'升級的路',h:'<p class="path">凡人 → 引氣 → 練氣一至九層 → 築基</p><p>前面 1 到 2 天就能升一層，越往後越慢。每天做約 3 項功課，大約 100 天走到築基。</p>'},
+  {g:'補',t:'斷一天怎麼辦',h:'<p>不會歸零，只會進入「道心震盪」。</p><ul><li>隔天完成 3 項功課，就能「補修」，連續天數保住</li><li>真的中斷了，修為和屬性都還在，只是連續天數重新計算</li></ul>'},
+  {g:'破',t:'大關：突破築基',h:'<p>到練氣九層，洞府會出現「瓶頸」卡，列出四個條件：</p><ul><li>修為 1000</li><li>鍛體 300、悟道 200</li><li>連續修煉 7 日</li></ul><p>全部達成後按「開始築基」，會有一段突破動畫。</p>'},
+  {g:'藝',t:'其他功能，之後再學',h:'<ul><li><b>奇遇</b>：每天一個小任務，有額外獎勵</li><li><b>百藝</b>：記錄想學的技能與作品</li><li><b>試道</b>：想知道某件事適不適合自己，就試一週</li><li><b>修仙錄</b>：你做過的每件事，按日期排好</li></ul>'},
+  {g:'始',t:'新手第一天',h:'<ol><li>到「修行」的「功法」，挑 2 到 3 項做得到的，其餘按「暫停」</li><li>回洞府，做完一件就打勾一件</li><li>看修為條前進一點，今天就完成了</li></ol>'}
+];
+function renderTut(){
+  const el = $('#tut'), i = ui.tut, c = TUT[i], last = i===TUT.length-1;
+  el.className = 'on';
+  el.innerHTML = '<button class="tex" data-act="tutClose" aria-label="退出教學">✕ 退出教學</button>'
+    + '<div class="tcard"><div class="thead">'+(i===0 ? '<span class="tlogo">'+emblem(58,'t')+wordmark(24)+'</span>' : '<span class="seal">'+c.g+'</span>')+'<span class="tstep">'+(i+1)+' / '+TUT.length+'</span></div>'
+    + '<h3>'+c.t+'</h3><div class="tbody">'+c.h+'</div>'
+    + '<div class="tdots">'+TUT.map((_,j)=>'<i class="'+(j===i?'on':'')+'"></i>').join('')+'</div>'
+    + '<div class="row" style="justify-content:space-between">'+(i>0?'<button class="btn ghost" data-act="tutPrev">上一步</button>':'<span></span>')
+    + (last?'<button class="btn seal" data-act="tutClose">開始修煉</button>':'<button class="btn pri" data-act="tutNext">下一步</button>')+'</div></div>';
+}
+
+/* ---------- render ---------- */
+function render(){
+  $('#view').innerHTML = ({home,train,trial,log,me})[ui.tab]();
+  if (document.body) document.body.classList.toggle('crisis', ui.tab==='home' && !!ui.shaken);
+  document.querySelectorAll('.nb').forEach(b=>b.classList.toggle('on', b.dataset.v===ui.tab));
+  ui.stamped = null;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{ document.querySelectorAll('[data-w]').forEach(el=>{ el.style.width = el.dataset.w+'%'; if (el.dataset.k) barMem[el.dataset.k] = Number(el.dataset.w); }); }));
+}
+
+/* ---------- actions ---------- */
+const val = id => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
+const A = {
+  tab(_,v){ ui.tab = v; closeSheet(); for (const k in barMem) delete barMem[k]; render(); window.scrollTo(0,0); },
+  sub(_,v){ ui.sub = v; for (const k in barMem) delete barMem[k]; render(); },
+  toggle(id){ toggleQuest(id); },
+  pause(id){ const q = S.quests.find(x=>x.id===id); if (q){ q.active = !q.active; save(); closeSheet(); render(); } },
+  closeSheet,
+  questMenu(id){
+    const q = S.quests.find(x=>x.id===id); if (!q) return;
+    sheet('<h3>'+esc(q.name)+'</h3><div class="row" style="margin-top:14px;flex-direction:column;align-items:stretch">'
+      +'<button class="btn" data-act="pause" data-id="'+id+'">'+(q.active?'暫停這門功法':'重新啟用')+'</button>'
+      +'<button class="btn" data-act="editQuestOpen" data-id="'+id+'">調整內容與時段</button>'
+      +'<button class="btn seal" data-act="delQuestAsk" data-id="'+id+'">刪除</button>'
+      +'<button class="btn ghost" data-act="closeSheet">取消</button></div>');
+  },
+  editQuestOpen(id){
+    const q = S.quests.find(x=>x.id===id); if (!q) return;
+    sheet('<h3>調整功法</h3><label class="f">名稱</label><input class="inp" id="f-name" value="'+esc(q.name)+'">'
+      +'<label class="f">完成條件</label><input class="inp" id="f-desc" value="'+esc(q.desc)+'">'
+      +'<label class="f">時段</label><select class="inp" id="f-slot">'+SLOTS.map(x=>'<option value="'+x[0]+'"'+((q.slot||'any')===x[0]?' selected':'')+'>'+x[1]+'　'+x[3]+'</option>').join('')+'</select>'
+      +'<label class="f">修行屬性</label><select class="inp" id="f-attr">'+ATTRS.map(a=>'<option value="'+a[0]+'"'+(q.attr===a[0]?' selected':'')+'>'+a[1]+'</option>').join('')+'</select>'
+      +'<div class="row" style="margin-top:8px"><div style="flex:1"><label class="f">修為</label><input class="inp" id="f-xp" type="number" value="'+q.xp+'" min="1" max="20"></div>'
+      +'<div style="flex:1"><label class="f">屬性</label><input class="inp" id="f-ar" type="number" value="'+q.ar+'" min="0" max="50"></div></div>'
+      +'<p class="note" style="margin:10px 0 0">調整只影響之後的打卡，已經完成的紀錄不會改動。</p>'
+      +'<div class="row" style="margin-top:14px"><button class="btn pri" data-act="editQuestSave" data-id="'+id+'">儲存</button><button class="btn ghost" data-act="closeSheet">取消</button></div>');
+  },
+  editQuestSave(id){
+    const q = S.quests.find(x=>x.id===id), name = val('f-name'); if (!q) return; if (!name){ toast('名稱不能留空'); return; }
+    q.name = name; q.desc = val('f-desc')||q.desc; q.slot = val('f-slot')||'any'; q.attr = val('f-attr')||q.attr;
+    q.xp = clamp(parseInt(val('f-xp'))||q.xp,1,20); q.ar = clamp(parseInt(val('f-ar')),0,50) || (val('f-ar')==='0'?0:q.ar);
+    save(); closeSheet(); render(); toast('功法已調整');
+  },
+  delQuestAsk(id){
+    const q = S.quests.find(x=>x.id===id); if (!q) return;
+    sheet('<h3>刪除「'+esc(q.name)+'」？</h3><p class="note" style="margin:0">過去的修煉紀錄與已得的修為都會保留，只是這門功法不再出現在功課裡。</p>'
+      +'<div class="row" style="margin-top:16px"><button class="btn seal" data-act="delQuestDo" data-id="'+id+'">確認刪除</button><button class="btn ghost" data-act="closeSheet">取消</button></div>');
+  },
+  delQuestDo(id){
+    const q = S.quests.find(x=>x.id===id); S.quests = S.quests.filter(x=>x.id!==id);
+    save(); closeSheet(); render(); toast(q?'已刪除「'+q.name+'」':'已刪除');
+  },
+  grp(id,v){ S.prefs.open[id] = v!=='1'; save(); render(); },
+  qview(_,v){ S.prefs.view = v; save(); render(); },
+  scrollQ(){ const el = document.getElementById('quests'); if (el && el.scrollIntoView) el.scrollIntoView({behavior:'smooth',block:'start'}); },
+  tutOpen(){ ui.tut = 0; renderTut(); },
+  tutNext(){ ui.tut = Math.min(TUT.length-1, ui.tut+1); renderTut(); },
+  tutPrev(){ ui.tut = Math.max(0, ui.tut-1); renderTut(); },
+  tutClose(){
+    const early = ui.tut < TUT.length-1;
+    S.tut = {done:true}; save();
+    const el = $('#tut'); el.className = ''; el.innerHTML = '';
+    if (early) toast('想再看，到「我」頁點「新手教學」');
+  },
+  closeRitual(){ $('#ritual').className = ''; $('#ritual').innerHTML = ''; ui.ritual = false; render(); },
+  breakthrough(){ ritual(); },
+  encDone(){
+    const t = today(), rec = S.enc[t]; if (!rec || rec.done) return;
+    const enc = ENCS.find(e=>e.id===rec.id); rec.done = true;
+    addEvent({type:'encounter',key:'enc:'+t,title:enc.name,note:enc.cond,rewards:enc.r}); applyRewards(enc.r);
+    toast('奇遇：'+enc.name); checkStage(); save(); render();
+  },
+  addQuestOpen(){
+    sheet('<h3>新增功法</h3><label class="f">名稱</label><input class="inp" id="f-name" placeholder="例如：萬步行">'
+      +'<label class="f">完成條件</label><input class="inp" id="f-desc" placeholder="例如：步行 8000 步">'
+      +'<label class="f">時段</label><select class="inp" id="f-slot">'+SLOTS.map(x=>'<option value="'+x[0]+'">'+x[1]+'　'+x[3]+'</option>').join('')+'</select>'
+      +'<label class="f">修行屬性</label><select class="inp" id="f-attr">'+ATTRS.map(a=>'<option value="'+a[0]+'">'+a[1]+'</option>').join('')+'</select>'
+      +'<div class="row" style="margin-top:8px"><div style="flex:1"><label class="f">修為</label><input class="inp" id="f-xp" type="number" value="4" min="1" max="20"></div>'
+      +'<div style="flex:1"><label class="f">屬性</label><input class="inp" id="f-ar" type="number" value="10" min="0" max="50"></div></div>'
+      +'<div class="row" style="margin-top:16px"><button class="btn pri" data-act="addQuestSave">建立功法</button><button class="btn ghost" data-act="closeSheet">取消</button></div>');
+  },
+  addQuestSave(){
+    const name = val('f-name'); if (!name){ toast('請先填寫名稱'); return; }
+    S.quests.push({id:'q'+uid(),name,desc:val('f-desc')||'每日修煉',attr:val('f-attr')||'heart',slot:val('f-slot')||'any',xp:clamp(parseInt(val('f-xp'))||4,1,20),ar:clamp(parseInt(val('f-ar'))||0,0,50),active:true});
+    save(); closeSheet(); render(); toast('功法已建立');
+  },
+  practiceOpen(id){
+    sheet('<h3>記錄一次練習</h3><label class="f">練習分鐘</label><input class="inp" id="f-min" type="number" value="60" min="1" max="600">'
+      +'<label class="f">備註</label><input class="inp" id="f-note" placeholder="今天練了什麼">'
+      +'<label class="f">完成的作品（沒有可留空）</label><input class="inp" id="f-work" placeholder="例如：第一個陶杯">'
+      +'<div class="row" style="margin-top:16px"><button class="btn pri" data-act="practiceSave" data-id="'+id+'">記入修仙錄</button><button class="btn ghost" data-act="closeSheet">取消</button></div>');
+  },
+  practiceSave(id){
+    const s = S.skills.find(x=>x.id===id); if (!s) return;
+    const min = clamp(parseInt(val('f-min'))||0,1,600), work = val('f-work'), note = val('f-note');
+    const rewards = {xp:Math.max(1,Math.round(min/30*7))};
+    s.count += 1; s.minutes += min;
+    addEvent({type:'practice',src:'skill',title:s.name+'修煉 '+min+' 分鐘',note:note||s.path,rewards}); applyRewards(rewards);
+    if (work){ s.works.push({id:uid(),name:work}); addEvent({type:'record',title:'成器：'+work,note:s.name+'作品'}); }
+    syncRepair(); checkStage(); save(); closeSheet(); render(); toast(s.name+'精進');
+  },
+  addSkillOpen(){
+    sheet('<h3>入道：新增百藝</h3><label class="f">技能名稱</label><input class="inp" id="f-name" placeholder="例如：書法">'
+      +'<label class="f">道統</label><select class="inp" id="f-path">'+PATHS.map(p=>'<option value="'+p[0]+'">'+p[0]+'　'+p[1]+'</option>').join('')+'</select>'
+      +'<div class="row" style="margin-top:16px"><button class="btn pri" data-act="addSkillSave">入道</button><button class="btn ghost" data-act="closeSheet">取消</button></div>');
+  },
+  addSkillSave(){
+    const name = val('f-name'); if (!name){ toast('請先填寫技能名稱'); return; }
+    S.skills.push({id:'s'+uid(),name,path:val('f-path'),count:0,minutes:0,works:[]});
+    addEvent({type:'growth',title:'入道：'+name,note:val('f-path')}); save(); closeSheet(); render(); toast('入道：'+name);
+  },
+  trialOpen(){
+    sheet('<h3>開始新的試道</h3><label class="f">想試什麼</label><input class="inp" id="f-name" placeholder="例如：裁縫">'
+      +'<label class="f">天數</label><input class="inp" id="f-days" type="number" value="7" min="1" max="60">'
+      +'<label class="f">目的</label><input class="inp" id="f-purpose" placeholder="想確認什麼">'
+      +'<label class="f">要確認的目標（一行一個，留空會使用預設）</label><textarea class="inp" id="f-goals" style="min-height:96px;font-size:14px" placeholder="認識工具&#10;學會穿線&#10;完成一件小作品"></textarea>'
+      +'<div class="row" style="margin-top:16px"><button class="btn pri" data-act="trialSave">開始試道</button><button class="btn ghost" data-act="closeSheet">取消</button></div>');
+  },
+  trialSave(){
+    const name = val('f-name'); if (!name){ toast('請先填寫內容'); return; }
+    let goals = val('f-goals').split('\n').map(x=>x.trim()).filter(Boolean).slice(0,8);
+    if (!goals.length) goals = DEFAULT_GOALS;
+    S.trials.push({id:'t'+uid(),name,days:clamp(parseInt(val('f-days'))||7,1,60),start:today(),purpose:val('f-purpose'),status:'active',verdict:'',
+      goals:goals.map(g=>({id:uid(),text:g,done:false})),logs:[]});
+    addEvent({type:'trial',title:'開始試道：'+name}); save(); closeSheet(); render();
+  },
+  trialGoal(id,gid){
+    const x = S.trials.find(t=>t.id===id); if (!x) return;
+    const g = x.goals.find(y=>y.id===gid); if (!g) return;
+    const key = 'tg:'+gid;
+    if (g.done){ g.done = false; const ex = removeEvent(key); if (ex) applyRewards(ex.rewards,-1); }
+    else { g.done = true; const rewards = {xp:3}; addEvent({type:'trial',key,title:'試道目標達成：'+g.text,note:x.name,rewards}); applyRewards(rewards); toast('目標達成'); }
+    checkStage(); save(); render();
+  },
+  goalAddOpen(id){
+    sheet('<h3>新增目標</h3><label class="f">想再確認什麼</label><input class="inp" id="f-goal" placeholder="例如：獨立完成一件成品">'
+      +'<div class="row" style="margin-top:16px"><button class="btn pri" data-act="goalAddSave" data-id="'+id+'">加入</button><button class="btn ghost" data-act="closeSheet">取消</button></div>');
+  },
+  goalAddSave(id){
+    const x = S.trials.find(t=>t.id===id), text = val('f-goal'); if (!x || !text){ toast('請先填寫目標'); return; }
+    x.goals.push({id:uid(),text,done:false}); save(); closeSheet(); render();
+  },
+  pick(f,v){
+    ui.draft[f] = v;
+    document.querySelectorAll('.pick[data-id="'+f+'"]').forEach(b=>b.classList.toggle('on', b.dataset.v===String(v)));
+  },
+  trialLogOpen(id){
+    const x = S.trials.find(t=>t.id===id); if (!x) return;
+    const ex = x.logs.find(l=>l.date===today());
+    ui.draft = {fun:ex?ex.fun:0, diff:ex?ex.diff:0, energy:ex?ex.energy:'flat', drive:ex?ex.drive:'mid'};
+    const picks = (f,opts) => '<div class="picks">'+opts.map(o=>'<button class="pick '+(String(ui.draft[f])===String(o[0])?'on':'')+'" data-act="pick" data-id="'+f+'" data-v="'+o[0]+'">'+o[1]+'</button>').join('')+'</div>';
+    const five = [1,2,3,4,5].map(n=>[n,String(n)]);
+    sheet('<h3>今日試道：'+esc(x.name)+'</h3>'
+      +'<label class="f">投入分鐘</label><input class="inp" id="f-min" type="number" min="0" max="600" value="'+(ex?ex.minutes:30)+'">'
+      +'<label class="f">有趣程度（1 無聊，5 很有趣）</label>'+picks('fun',five)
+      +'<label class="f">吃力程度（1 很輕鬆，5 很吃力）</label>'+picks('diff',five)
+      +'<label class="f">做完之後的精神</label>'+picks('energy',[['up','更有精神'],['flat','差不多'],['down','更疲憊']])
+      +'<label class="f">開始做之前的動力</label>'+picks('drive',[['self','主動想做'],['mid','普通'],['forced','需要逼自己']])
+      +'<label class="f">備註</label><input class="inp" id="f-note" placeholder="今天有什麼發現" value="'+esc(ex?ex.note||'':'')+'">'
+      +'<div class="row" style="margin-top:16px"><button class="btn pri" data-act="trialLogSave" data-id="'+id+'">記入試道</button><button class="btn ghost" data-act="closeSheet">取消</button></div>');
+  },
+  trialLogSave(id){
+    const x = S.trials.find(t=>t.id===id), d = ui.draft; if (!x) return;
+    if (!d.fun || !d.diff){ toast('請選擇有趣與吃力程度'); return; }
+    const t = today();
+    const entry = {date:t,minutes:clamp(parseInt(val('f-min'))||0,0,600),fun:Number(d.fun),diff:Number(d.diff),energy:d.energy,drive:d.drive,note:val('f-note')};
+    const i = x.logs.findIndex(l=>l.date===t); if (i>=0) x.logs[i] = entry; else x.logs.push(entry);
+    const key = 'tl:'+id+':'+t, ex = removeEvent(key); if (ex) applyRewards(ex.rewards,-1);
+    const rewards = {xp:2};
+    addEvent({type:'trial',key,title:'試道記錄：'+x.name,note:'有趣 '+entry.fun+'　吃力 '+entry.diff+'　'+entry.minutes+' 分鐘'+(entry.note?'　'+entry.note:''),rewards}); applyRewards(rewards);
+    checkStage(); save(); closeSheet(); render(); toast('已記錄今日試道');
+  },
+  trialFinishOpen(id){
+    const x = S.trials.find(t=>t.id===id); if (!x) return;
+    const s = trialStats(x);
+    sheet('<h3>試道結算：'+esc(x.name)+'</h3><p class="note" style="margin:0">先看這段路留下的紀錄，再決定要不要繼續走。</p>'+evidence(x,s)
+      +'<div class="hint"><b>參考</b>　'+trialHint(s)+'　最後由你決定。</div>'
+      +'<label class="f">用一句話寫下這次的感受（可留空）</label><input class="inp" id="f-review" placeholder="例如：手很忙，但心很靜">'
+      +'<div class="row" style="margin-top:16px"><button class="btn pri" data-act="trialVerdict" data-id="'+id+'" data-v="worth">此道可修</button>'
+      +'<button class="btn" data-act="trialVerdict" data-id="'+id+'" data-v="extend">再試一週</button>'
+      +'<button class="btn" data-act="trialVerdict" data-id="'+id+'" data-v="notNow">此道暫不適合</button></div>');
+  },
+  trialVerdict(id,v){
+    const x = S.trials.find(t=>t.id===id); if (!x) return;
+    const note = val('f-review');
+    if (v==='extend'){
+      x.days += 7; addEvent({type:'trial',title:'延長試道：'+x.name,note:'再試一週，收集更多感受。'});
+      save(); closeSheet(); render(); toast('再試一週'); return;
+    }
+    x.status = 'done'; x.verdict = v; x.review = {note};
+    const rewards = {xp:10};
+    addEvent({type:'trial',title:'試道結算：'+x.name,note:(v==='worth'?'此道可修':'此道暫不適合')+(note?'　'+note:''),rewards}); applyRewards(rewards);
+    checkStage(); save(); closeSheet(); render();
+    if (v==='worth') A.skillOfferOpen(id);
+  },
+  skillOfferOpen(id){
+    const x = S.trials.find(t=>t.id===id); if (!x) return;
+    sheet('<h3>此道可修</h3><p class="note" style="margin:0">要把「'+esc(x.name)+'」加入百藝，正式入道嗎？</p>'
+      +'<label class="f">技能名稱</label><input class="inp" id="f-name" value="'+esc(x.name)+'">'
+      +'<label class="f">道統</label><select class="inp" id="f-path">'+PATHS.map(p=>'<option value="'+p[0]+'">'+p[0]+'　'+p[1]+'</option>').join('')+'</select>'
+      +'<div class="row" style="margin-top:16px"><button class="btn pri" data-act="trialToSkill" data-id="'+id+'">入道</button><button class="btn ghost" data-act="closeSheet">先不用</button></div>');
+  },
+  trialToSkill(id){
+    const x = S.trials.find(t=>t.id===id), name = val('f-name'); if (!x || !name){ toast('請先填寫技能名稱'); return; }
+    const sk = {id:'s'+uid(),name,path:val('f-path'),count:0,minutes:0,works:[]};
+    S.skills.push(sk); x.skillId = sk.id;
+    addEvent({type:'growth',title:'入道：'+name,note:'由試道「'+x.name+'」轉入百藝'}); save(); closeSheet(); render(); toast('入道：'+name);
+  },
+  renameOpen(){
+    sheet('<h3>道號</h3><input class="inp" id="f-name" value="'+esc(S.user.daoName)+'" maxlength="12"><div class="row" style="margin-top:16px"><button class="btn pri" data-act="renameSave">確定</button><button class="btn ghost" data-act="closeSheet">取消</button></div>');
+  },
+  renameSave(){ const n = val('f-name'); if (n){ S.user.daoName = n; save(); closeSheet(); render(); } },
+  demoXp(){ S.user.cultivation += 100; checkStage(); save(); render(); toast('修為 +100'); },
+  demoDays(){ seedDays(10); syncRepair(); checkStage(); save(); render(); toast('已補入 10 日修煉'); },
+  demoBreak(){
+    if (S.user.foundation){ toast('已經築基，先重置再體驗'); return; }
+    seedDays(7);
+    S.user.cultivation = Math.max(S.user.cultivation, BREAK.cultivation);
+    S.attrs.body = Math.max(S.attrs.body, BREAK.attrs.body);
+    S.attrs.wisdom = Math.max(S.attrs.wisdom, BREAK.attrs.wisdom);
+    checkStage(); save(); ui.tab = 'home'; render(); window.scrollTo(0,0); toast('已達突破條件');
+  },
+  exportOpen(){
+    sheet('<h3>匯出備份</h3><p class="note">下載成檔案，或複製文字存起來。換裝置時用「匯入備份」還原。</p><textarea class="inp" id="f-json" readonly>'+esc(JSON.stringify(S))+'</textarea>'
+      +'<div class="row" style="margin-top:12px"><button class="btn pri" data-act="dlBackup">下載備份檔</button><button class="btn" data-act="copyJson">複製文字</button><button class="btn ghost" data-act="closeSheet">關閉</button></div>');
+  },
+  dlBackup(){
+    try{
+      const blob = new Blob([JSON.stringify(S)],{type:'application/json'}), a = document.createElement('a');
+      a.href = URL.createObjectURL(blob); a.download = 'fanren-backup-'+today()+'.json';
+      document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),4000); toast('備份檔已下載');
+    }catch(e){ toast('無法下載，請改用「複製文字」'); }
+  },
+  copyJson(){
+    const el = document.getElementById('f-json'); el.select();
+    try{ navigator.clipboard.writeText(el.value).then(()=>toast('已複製'),()=>{ document.execCommand('copy'); toast('已複製'); }); }
+    catch(e){ try{ document.execCommand('copy'); toast('已複製'); }catch(_){ toast('請長按文字手動複製'); } }
+  },
+  importOpen(){
+    sheet('<h3>匯入備份</h3><p class="note">選擇備份檔，或貼上先前匯出的文字。匯入會取代目前的資料。</p><input type="file" id="f-file" accept=".json,application/json" class="inp" style="margin-bottom:10px"><textarea class="inp" id="f-json"></textarea>'
+      +'<div class="row" style="margin-top:12px"><button class="btn pri" data-act="importSave">匯入</button><button class="btn ghost" data-act="closeSheet">取消</button></div>');
+  },
+  importSave(){
+    try{ const o = JSON.parse(val('f-json')); if (!o || o.v!==1 || !o.user || !o.attrs) throw 0; S = normalize(o); save(); closeSheet(); render(); toast('已匯入'); }
+    catch(e){ toast('格式不正確，無法匯入'); }
+  },
+  resetOpen(){
+    sheet('<h3>重置所有資料？</h3><p class="note">修為、功法、紀錄都會清除，回到初始狀態。建議先匯出備份。</p><div class="row" style="margin-top:14px"><button class="btn seal" data-act="resetDo">確認重置</button><button class="btn ghost" data-act="closeSheet">取消</button></div>');
+  },
+  resetDo(){ S = defaultState(); S.tut = {done:true}; save(); closeSheet(); ui.tab = 'home'; render(); toast('已重置'); },
+  theme(){
+    const root = document.documentElement, cur = root.dataset.theme;
+    const dark = cur ? cur==='dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    const next = dark ? 'light' : 'dark'; root.dataset.theme = next;
+    try{ localStorage.setItem(THEME_KEY,next); }catch(e){}
+    $('.iconbtn').textContent = next==='dark' ? '☀' : '☾';
+  }
+};
+
+document.addEventListener('click', e=>{
+  const el = e.target.closest('[data-act]'); if (!el) return;
+  const f = A[el.dataset.act]; if (f) f(el.dataset.id, el.dataset.v, el);
+});
+
+/* ---------- swipe / long-press reorder ---------- */
+const LD = 92, TR = 152;
+const SW = {row:null,main:null,id:'',x0:0,y0:0,off0:0,mode:null,timer:null,pid:null,ghost:null,line:null,target:null,grab:0,raf:0,lastY:0};
+function swClose(except){
+  document.querySelectorAll('.swrow').forEach(r=>{
+    if (r!==except && r._off){ r._off = 0; const m = r.querySelector('.sw-main'); m.style.transition = 'transform .22s'; m.style.transform = 'translateX(0)'; }
+  });
+}
+const preventTouch = e => { if (SW.mode==='drag') e.preventDefault(); };
+function dropTarget(y){
+  const rows = [...document.querySelectorAll('#view .swrow')].filter(r=>r.dataset.id!==SW.id);
+  const groups = [...document.querySelectorAll('#view .grp')];
+  const pick = list => {
+    for (const r of list){ const b = r.getBoundingClientRect(); if (y < b.top+b.height/2) return {before:r.dataset.id,lineY:b.top}; }
+    return {before:null,lineY:list.length ? list[list.length-1].getBoundingClientRect().bottom : null};
+  };
+  if (!groups.length){ const t = pick(rows); return {slot:null,before:t.before,lineY:t.lineY}; }
+  let best = null, bd = 1e9;
+  groups.forEach(g=>{ const b = g.getBoundingClientRect(); const d = y<b.top ? b.top-y : (y>b.bottom ? y-b.bottom : 0); if (d<bd){ bd = d; best = g; } });
+  const items = [...best.querySelectorAll('.swrow')].filter(r=>r.dataset.id!==SW.id);
+  const t = pick(items);
+  if (t.lineY==null) t.lineY = best.querySelector('.gb').getBoundingClientRect().top + 8;
+  return {slot:best.dataset.slot,before:t.before,lineY:t.lineY};
+}
+function dragPaint(){
+  const t = SW.target; if (!t || !SW.line) return;
+  const v = $('#view').getBoundingClientRect();
+  SW.line.style.left = v.left+'px'; SW.line.style.width = v.width+'px'; SW.line.style.top = (t.lineY-1.5)+'px';
+  document.querySelectorAll('#view .grp').forEach(g=>g.classList.toggle('drop-target', t.slot!=null && g.dataset.slot===t.slot));
+}
+function dragStart(){
+  const row = SW.row; if (!row || SW.mode!==null || SW.off0!==0) return;
+  SW.mode = 'drag';
+  try{ if (navigator.vibrate) navigator.vibrate(15); }catch(_){}
+  document.body.classList.add('dragging-list');
+  document.querySelectorAll('#view .gb.shut').forEach(g=>g.classList.remove('shut'));
+  SW.main.classList.remove('pressing');
+  const r = row.getBoundingClientRect();
+  SW.grab = r.height/2;
+  const g = row.cloneNode(true); g.classList.add('ghost');
+  g.querySelectorAll('.sw-lead,.sw-trail').forEach(n=>n.remove());
+  g.style.cssText = 'position:fixed;left:'+r.left+'px;top:'+(SW.y0-SW.grab)+'px;width:'+r.width+'px;z-index:85;';
+  document.body.appendChild(g); SW.ghost = g; row.classList.add('dragging');
+  SW.line = document.createElement('div'); SW.line.className = 'drop-line'; document.body.appendChild(SW.line);
+  try{ SW.main.setPointerCapture(SW.pid); }catch(_){}
+  document.addEventListener('touchmove', preventTouch, {passive:false});
+  SW.lastY = SW.y0; SW.target = dropTarget(SW.lastY); dragPaint();
+  const loop = () => {
+    if (SW.mode!=='drag') return;
+    const y = SW.lastY;
+    if (y < 90) window.scrollBy(0,-12); else if (y > innerHeight-120) window.scrollBy(0,12);
+    SW.target = dropTarget(y); dragPaint();
+    SW.raf = requestAnimationFrame(loop);
+  };
+  SW.raf = requestAnimationFrame(loop);
+}
+function moveQuest(id,slot,before){
+  const i = S.quests.findIndex(q=>q.id===id); if (i<0){ render(); return; }
+  const q = S.quests[i], oldSlot = q.slot||'any', order0 = S.quests.map(x=>x.id).join();
+  S.quests.splice(i,1);
+  if (slot) q.slot = slot;
+  let pos;
+  if (before){ pos = S.quests.findIndex(x=>x.id===before); if (pos<0) pos = S.quests.length; }
+  else {
+    let last = -1; S.quests.forEach((x,k)=>{ if ((x.slot||'any')===(q.slot||'any')) last = k; });
+    pos = slot && last>=0 ? last+1 : S.quests.length;
+  }
+  S.quests.splice(pos,0,q);
+  const changed = slot && oldSlot!==slot, name = slot ? SLOTS.find(x=>x[0]===slot)[1] : '';
+  if (changed) S.prefs.open['m:'+slot] = true;
+  save(); render();
+  if (changed) toast('「'+q.name+'」已移至'+name+'，時段改為'+name);
+  else if (S.quests.map(x=>x.id).join()!==order0) toast('已調整順序');
+}
+function dragEnd(cancel){
+  cancelAnimationFrame(SW.raf); document.removeEventListener('touchmove',preventTouch);
+  if (SW.ghost) SW.ghost.remove(); if (SW.line) SW.line.remove();
+  document.body.classList.remove('dragging-list');
+  const t = SW.target; SW.ghost = SW.line = null; SW.target = null;
+  if (!cancel && t) moveQuest(SW.id,t.slot,t.before); else render();
+}
+document.addEventListener('pointerdown', e=>{
+  const row = e.target.closest && e.target.closest('.swrow');
+  if (!row){ swClose(null); return; }
+  if (!e.target.closest('.sw-main') || e.target.closest('.dots')) return;
+  if (e.pointerType==='mouse' && e.button!==0) return;
+  swClose(row);
+  Object.assign(SW,{row,main:row.querySelector('.sw-main'),id:row.dataset.id,x0:e.clientX,y0:e.clientY,off0:row._off||0,mode:null,pid:e.pointerId});
+  SW.main.classList.add('pressing');
+  clearTimeout(SW.timer); SW.timer = setTimeout(dragStart,420);
+});
+document.addEventListener('pointermove', e=>{
+  if (!SW.row || e.pointerId!==SW.pid) return;
+  if (SW.mode==='drag'){ SW.lastY = e.clientY; SW.ghost.style.top = (e.clientY-SW.grab)+'px'; return; }
+  const dx = e.clientX-SW.x0, dy = e.clientY-SW.y0;
+  if (SW.mode===null){
+    if (Math.abs(dx)>8 && Math.abs(dx)>Math.abs(dy)*1.2){ SW.mode = 'swipe'; clearTimeout(SW.timer); SW.main.classList.remove('pressing'); SW.main.style.transition = 'none'; try{ SW.main.setPointerCapture(e.pointerId); }catch(_){} }
+    else if (Math.abs(dx)>8 || Math.abs(dy)>10){ SW.mode = 'scroll'; clearTimeout(SW.timer); SW.main.classList.remove('pressing'); return; }
+    else return;
+  }
+  if (SW.mode==='swipe'){ const off = clamp(SW.off0+dx,-TR-16,LD+16); SW.row._cur = off; SW.main.style.transform = 'translateX('+off+'px)'; }
+});
+function swEnd(e){
+  if (!SW.row || e.pointerId!==SW.pid) return;
+  clearTimeout(SW.timer); SW.main.classList.remove('pressing');
+  if (SW.mode==='swipe'){
+    const off = SW.row._cur||0; let f = 0;
+    if (off > LD*0.45) f = LD; else if (off < -TR*0.4) f = -TR;
+    SW.row._off = f; SW.main.style.transition = 'transform .22s'; SW.main.style.transform = 'translateX('+f+'px)';
+  } else if (SW.mode==='drag') dragEnd(e.type==='pointercancel');
+  SW.row = null; SW.mode = null;
+}
+document.addEventListener('pointerup', swEnd);
+document.addEventListener('pointercancel', swEnd);
+document.addEventListener('contextmenu', e=>{ if (e.target.closest && e.target.closest('.swrow')) e.preventDefault(); });
+
+/* ---------- init ---------- */
+try{ const th = localStorage.getItem(THEME_KEY); if (th){ document.documentElement.dataset.theme = th; } }catch(e){}
+(function(){ const root = document.documentElement, cur = root.dataset.theme;
+  const dark = cur ? cur==='dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  $('.iconbtn').textContent = dark ? '☀' : '☾'; })();
+document.addEventListener('change', e=>{
+  if (!e.target || e.target.id!=='f-file') return;
+  const f = e.target.files && e.target.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = () => { const el = document.getElementById('f-json'); if (el){ el.value = String(r.result); toast('已讀取檔案，按「匯入」完成'); } };
+  r.readAsText(f);
+});
+document.addEventListener('keydown', e=>{ if (e.key==='Escape' && $('#tut').className==='on') A.tutClose(); });
+$('#brand').innerHTML = emblem(34,'b')+wordmark(22);
+const cdTimer = setInterval(()=>{ const el = document.getElementById('cd'); if (el && ui.tab==='home') el.textContent = fmtLeft(); }, 30000);
+if (cdTimer && cdTimer.unref) cdTimer.unref();
+checkStage(); save(); render();
+if (!S.tut) A.tutOpen();
+if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js').catch(()=>{}); });
+}
+})();
+</script>
+</body>
+</html>

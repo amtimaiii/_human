@@ -1,7 +1,7 @@
 // 凡人修仙錄 service worker：讓 App 可安裝、可離線開啟。
 // 更新網站內容後，把下面的版本號 +1，舊快取就會被清掉。
-const CACHE = 'fanren-xiuxian-v1';
-const ASSETS = ['./', './index.html', './manifest.webmanifest', './favicon.svg', './icon-192.png', './icon-512.png'];
+const CACHE = 'fanren-xiuxian-v7';
+const ASSETS = ['./', './index.html', './manifest.json', './favicon.svg', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));

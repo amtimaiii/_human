@@ -7,13 +7,15 @@
 - 純 HTML + CSS + JavaScript，沒有後端、不需登入、不用安裝任何套件
 - 資料存在瀏覽器的 LocalStorage
 - 可安裝到手機主畫面，離線也能開啟（PWA）
+- 第一次開啟是全空白狀態：功法、百藝、試道都由你自己新增
+- 右上角「實驗室」：日常時段清單、主題週打卡、月曆、封存
 
 ## 檔案說明
 
 | 檔案 | 用途 |
 |---|---|
 | `index.html` | App 本體（所有畫面與邏輯） |
-| `manifest.webmanifest` | 讓 App 可安裝到主畫面 |
+| `manifest.json` | 讓 App 可安裝到主畫面 |
 | `sw.js` | 離線快取（Service Worker） |
 | `favicon.svg`、`icon-*.png`、`apple-touch-icon.png` | 網站與 App 圖示 |
 | `logo.svg`、`logo.png` | Logo |
@@ -33,6 +35,10 @@
 
 > 私人 repository 需要付費方案才能使用 Pages。免費方案請把 repository 設為 Public。
 
+### 替換舊的實驗室 repository
+
+如果你想直接用原本放實驗室的 repository：把這個資料夾裡的所有檔案上傳，覆蓋同名檔案（`index.html`、`manifest.json`、`sw.js`、`icon-192.png`、`icon-512.png`），網址不會變。原本實驗室的資料會在第一次開啟「實驗室」時自動帶進來（同一個網址、同一個瀏覽器才有）。
+
 ## 安裝到手機主畫面
 
 - **iPhone（Safari）**：分享按鈕 → 加入主畫面
@@ -42,16 +48,15 @@
 
 - 資料只存在「這個網址、這個瀏覽器」。清除瀏覽器資料、換手機、換瀏覽器都會不見。
 - 到「我」頁最下方的 **設定與備份**：
-  - **匯出備份**：下載成檔案，或複製文字。
+  - **匯出備份**：下載成檔案，或複製文字（包含實驗室資料）。
   - **匯入備份**：選擇備份檔，或貼上文字，會取代目前資料。
 - 請定期匯出。
-- 如果你之前在別的網址試玩過，想帶著進度過來：先在舊網址匯出（複製文字），再到新網址匯入。
 
 ## 更新網站
 
 1. 修改檔案後，在 GitHub 上重新上傳同名檔案並 Commit。
 2. 因為有離線快取，改完後如果畫面還是舊的，先重新整理一次，或完全關閉 App 再開。
-3. 想確保所有人都換成新版：把 `sw.js` 最上面的 `CACHE` 版本號加 1（例如 `fanren-xiuxian-v2`），並把 `index.html` 裡的 `APP_VERSION` 一起更新。
+3. 想確保所有人都換成新版：把 `sw.js` 最上面的 `CACHE` 版本號加 1（例如 `fanren-xiuxian-v4`），並把 `index.html` 裡的 `APP_VERSION` 一起更新。
 
 ## 測試模式
 
@@ -59,6 +64,6 @@
 
 ## 技術備註
 
-- LocalStorage key：`fanren-xiuxian-v1`（主題偏好另存為 `fanren-theme`），資料結構 `v: 1`。
+- LocalStorage key：`fanren-xiuxian-v1`，資料結構 `v: 1`；實驗室資料放在同一份資料的 `lab` 欄位。
 - 字型使用 Google Fonts（Noto Serif TC、Noto Sans TC）。沒有網路且沒載入過時，會退回系統字型，功能不受影響。
-- 同一個 GitHub 帳號下的不同 repository 共用 `你的帳號.github.io` 這個來源，但本 App 的儲存 key 是獨立的，不會互相干擾。
+- 日夜模式跟隨手機系統設定。
